@@ -52,13 +52,28 @@
           <el-button @click="onPredictButtonClick()">开始预测</el-button>
         </div>
       </div>
-      <div v-if="step == 4" style="width:200px;height:200px;" class="mx-auto">
+      <div v-if="step == 4 && isLoading" style="width:200px;height:200px;" class="mx-auto">
         <lottie
           :options="defaultOptions"
           :height="200"
           :width="200"
           v-on:animCreated="handleAnimation"
         />
+      </div>
+      <div v-if="step == 4 && !isLoading" class="d-flex m-6 flex-justify-between flex-items-center" >
+        <div class="flex-auto text-center">
+          <img v-bind:src="result.teamA.avatar" class="circle mr-2" style="width: 40px;height: 40px;" >
+          <div class="flex-auto h1">{{result.teamA.name}}</div>
+        </div>
+        <div class="flex-auto d-flex flex-justify-center flex-items-center">
+          <label class="h1">{{result.teamA.rate}}</label>
+          <label class="mx-4 h1">vs</label>
+          <label class="h1">{{result.teamB.rate}}</label>
+        </div>
+        <div class="flex-auto text-center">
+          <img v-bind:src="result.teamB.avatar" class="circle mr-2" style="width:40px;height:40px;">
+          <div class="flex-auto h1">{{result.teamB.name}}</div>
+        </div>
       </div>
     </div>
   </section>
@@ -72,8 +87,11 @@ export default {
   components: {
     lottie: lottie
   },
+  fetchData() {},
   data() {
     return {
+      isLoading: true,
+      result: {},
       leagueData: [
         {
           name: "league-name"
@@ -92,7 +110,7 @@ export default {
       currentLeague: null,
       currentA: null,
       currentB: null,
-      flag: false,//TODO
+      flag: false, //TODO
 
       defaultOptions: { animationData: loading },
       animationSpeed: 1,
@@ -103,7 +121,23 @@ export default {
 
   methods: {
     _predict() {
-
+      setTimeout(() => {
+        this.result = {
+          teamA: {
+            name: "aaa",
+            avatar:
+              "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
+            rate: "50%"
+          },
+          teamB: {
+            name: "bbb",
+            avatar:
+              "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
+            rate: "50%"
+          }
+        };
+        this.isLoading = false;
+      }, 5000);
     },
     onLeagueSelect(val) {
       this.currentLeague = val;
@@ -118,7 +152,7 @@ export default {
     onTeamBSelect(val) {
       this.currentB = val;
       this.step = 4;
-      this._predict()
+      this._predict();
       console.log(this.step);
     },
     onBackButtonClick() {
@@ -128,8 +162,8 @@ export default {
       this.step += 1;
     },
     onPredictButtonClick() {
-        this.step = 4
-        this._predict()
+      this.step = 4;
+      this._predict();
     },
     handleAnimation: function(anim) {
       this.anim = anim;
