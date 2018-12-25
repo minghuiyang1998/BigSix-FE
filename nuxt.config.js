@@ -28,14 +28,17 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '@/assets/css/primer.css'
+    '@/assets/css/primer.css',
+    '@/assets/css/global.css'
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/clampy',
+    { src: '@/plugins/lottie', ssr: false },
   ],
 
   /*
@@ -61,6 +64,12 @@ module.exports = {
     */
     extend(config, ctx) {
 
+    },
+    /**
+     * Babel configure
+     */
+    babel: {
+      "plugins": ["@babel/plugin-proposal-export-default-from"]
     }
   }
 }

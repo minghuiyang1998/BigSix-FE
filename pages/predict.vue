@@ -78,15 +78,11 @@
 </template>
 
 <script>
-import lottie from "vue-lottie";
 import loading from "../assets/lottie/confetti.json";
 import success from "../assets/lottie/star_success.json";
 
 const tableStatesENUM = ["league", "teamA", "teamB",'predict'];
 export default {
-  components: {
-    lottie: lottie
-  },
   fetchData() {},
   data() {
     return {

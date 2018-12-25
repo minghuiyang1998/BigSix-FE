@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="app">
     <Header />
-    <main>
+    <main class="main">
       <nuxt />
     </main>
   </div>
@@ -16,3 +16,20 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.app {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f8f8fb;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  margin: 30px 80px 0;
+  padding: 0 30px;
+  max-width: 90%;
+  position: relative;
+}
+</style>
