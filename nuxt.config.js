@@ -28,7 +28,7 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '@assets/css/primer.css'
+    '@/assets/css/primer.css'
   ],
 
   /*
@@ -60,7 +60,7 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      
+
     }
   }
 }
