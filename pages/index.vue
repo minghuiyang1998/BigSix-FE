@@ -1,50 +1,31 @@
 <template>
-  <section class="container">
-    <div>
-      <h1 class="title text-red">
-        BigSix-FE
-      </h1>
-      <h2 class="subtitle">
-        My lovely Nuxt.js project
-      </h2>
-      <div class="links">
-        <nuxt-link to="/login">login</nuxt-link>
-        <nuxt-link to="/predict">predict</nuxt-link>
-        <nuxt-link to="/team/1">teamInfo</nuxt-link>
-      </div>
+  <div class="landing">
+    <div class="slogan">
+      <h1 class="title">BigSix</h1>
+      <p class="sub-title">Make your own league another La Liga.</p>
     </div>
-  </section>
+  </div>
 </template>
 
-<style>
-
-.container {
-  min-height: 100vh;
+<style lang="scss" scoped>
+.landing {
   display: flex;
+  height: calc(100vh - 220px);
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
+.slogan {
+  font-family: serif;
+}
+
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
   font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.sub-title {
+  font-size: 32px;
+  color: #555;
 }
 </style>
