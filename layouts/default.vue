@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <main>
+    <main class="main">
       <nuxt />
     </main>
   </div>
@@ -16,3 +16,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.main {
+  margin: 30px 80px 0;
+  padding: 0 30px;
+  max-width: 90%;
+}
+</style>
