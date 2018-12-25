@@ -8,6 +8,7 @@
     >
       <el-menu-item index="/">首页</el-menu-item>
       <template v-if="isLogin">
+        <el-menu-item index="/league">我的联赛</el-menu-item>
         <el-menu-item index="/predict">比赛预测</el-menu-item>
       </template>
       <template v-else>

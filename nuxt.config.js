@@ -35,7 +35,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/clampy',
   ],
 
   /*
@@ -61,6 +62,12 @@ module.exports = {
     */
     extend(config, ctx) {
 
+    },
+    /**
+     * Babel configure
+     */
+    babel: {
+      "plugins": ["@babel/plugin-proposal-export-default-from"]
     }
   }
 }

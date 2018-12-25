@@ -11,6 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@clampy-js/vue-clampy": "^1.0.6",
     "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
     "echarts": "^4.2.0-rc.2",
@@ -22,6 +23,7 @@
     "vue-lottie": "^0.2.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.11.0",
     "sass-loader": "^7.1.0"
