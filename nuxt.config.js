@@ -28,7 +28,8 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '@/assets/css/primer.css'
+    '@/assets/css/primer.css',
+    '@/assets/css/global.css'
   ],
 
   /*
@@ -37,6 +38,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/clampy',
+    { src: '@/plugins/lottie', ssr: false },
   ],
 
   /*
