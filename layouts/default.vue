@@ -1,20 +1,18 @@
 <template>
-  <el-container>
-    <el-header>
-      <NavBar />
-    </el-header>
-    <el-main>
-      <nuxt/>
-    </el-main>
-  </el-container>
+  <div>
+    <Header />
+    <main>
+      <nuxt />
+    </main>
+  </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar'
+import Header from '@/components/Header'
 
 export default {
   components: {
-    NavBar
+    Header
   }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
+  <header class="header">
     <Logo />
     <Menu />
-  </div>
+  </header>
 </template>
 
 <script>
@@ -19,9 +19,10 @@ export default {
 
 <style scoped>
 .header {
-  height: 100%;
+  height: 80px;
   display: flex;
   justify-content: space-between;
-  margin: 0 80px;
+  padding: 10px 80px;
+  border-bottom: 1px solid #eee;
 }
 </style>

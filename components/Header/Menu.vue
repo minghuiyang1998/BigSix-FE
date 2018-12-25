@@ -1,6 +1,11 @@
 <template>
   <div class="i-menu">
-    <el-menu class="i-menu-bar" router mode="horizontal" :default-active="path">
+    <el-menu
+     class="i-menu-bar"
+     router
+     mode="horizontal"
+     :default-active="path"
+    >
       <el-menu-item index="/">首页</el-menu-item>
       <template v-if="isLogin">
         <el-menu-item index="/predict">比赛预测</el-menu-item>
@@ -47,6 +52,11 @@ export default {
 }
 
 .i-menu-bar {
+  padding-right: 1em;
   border: none;
+}
+
+.el-menu-item {
+  border: none!important;
 }
 </style>
