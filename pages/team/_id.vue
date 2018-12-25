@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex" style="background:linear-gradient(#ffffff 25%, #eef1f6 25%); heigth: 100%;">
+  <div class="d-flex" style="background:linear-gradient(45deg, #ffffff 50%, #eef1f6 50%); heigth: 100%;">
     <aside class="position-fixed top-0 bottom-0 left-0 right-0 col-md-4 col-lg-3 hide-md hide-sm" style="background-color: #58AF9B" >
       <img v-bind:src="team.avatar" style="width: 200px;" class="border-dashed border-blue-light circle d-block p-3 mx-auto my-4" >
       <p class="h1 text-center text-white">{{team.name}}</p>

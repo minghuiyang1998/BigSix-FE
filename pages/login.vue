@@ -1,5 +1,5 @@
 <template>
-  <section class="background d-flex flex-justify-center flex-items-center">
+  <section class="d-flex flex-justify-center flex-items-center" style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;">
     <div class="col-md-5 col-lg-5 rounded-1 text-gray bg-white py-4 px-4 box-shadow-large">
         <div style="width:200px;height:200px;" class="mx-auto">
           <lottie
@@ -19,7 +19,7 @@
             <el-input type="password" v-model="user.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary btn-block" @click="submitForm()">login</el-button>
+            <el-button type="success btn-block" @click="submitForm()">login</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -55,10 +55,5 @@ export default {
 </script>
 
 <style>
-.background {
-  background: url("../assets/image/new-york-basketball.png");
-  background-position: center;
-  background-size: cover;
-  height: 100vh;
-}
+
 </style>
