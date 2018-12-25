@@ -10,6 +10,7 @@
       </h2>
       <div class="links">
         <nuxt-link to="/login">login</nuxt-link>
+        <nuxt-link to="/predict">predict</nuxt-link>
       </div>
     </div>
   </section>

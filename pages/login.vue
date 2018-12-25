@@ -1,7 +1,6 @@
 <template>
   <section class="background d-flex flex-justify-center flex-items-center">
-    <div class="col-md-5 col-lg-5">
-      <div class="text-gray bg-white py-4 px-4" >
+    <div class="col-md-5 col-lg-5 rounded-1 text-gray bg-white py-4 px-4 box-shadow-large">
         <div style="width:200px;height:200px;" class="mx-auto">
           <lottie
             :options="defaultOptions"
@@ -23,7 +22,6 @@
             <el-button type="primary btn-block" @click="submitForm()">login</el-button>
           </el-form-item>
         </el-form>
-      </div>
     </div>
   </section>
 </template>
