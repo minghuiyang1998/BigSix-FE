@@ -10,13 +10,13 @@
           />
         </div>
         <el-form :model="user">
-          <el-form-item prop="name">
+          <el-form-item prop="name" required="true">
             <label class="form-label f5">username</label>
-            <el-input type="username" v-model="user.name" autocomplete="off" required="true"></el-input>
+            <el-input type="username" v-model="user.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="pass">
+          <el-form-item prop="pass" required="true">
             <label class="form-label f5">password</label>
-            <el-input type="password" v-model="user.pass" autocomplete="off" required="true"></el-input>
+            <el-input type="password" v-model="user.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary btn-block" @click="submitForm()">login</el-button>
@@ -58,7 +58,7 @@ export default {
 .background {
   background: url("../assets/image/new-york-basketball.png");
   background-position: center;
-  background-size: 100vw;
+  background-size: cover;
   height: 100vh;
 }
 </style>

@@ -112,7 +112,7 @@ export default {
       currentB: null,
       flag: false, //TODO
 
-      defaultOptions: { animationData: loading },
+      defaultOptions: { animationData: success },
       animationSpeed: 1,
       anim: {},
       step: 0
