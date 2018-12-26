@@ -42,7 +42,7 @@ export default {
     LeagueList,
     TeamList,
     LeagueForm,
-    TeamForm
+    TeamForm,
   },
   head: {
     title: '我的联赛'

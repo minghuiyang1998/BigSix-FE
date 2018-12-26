@@ -9,19 +9,23 @@
       :avatar="league.avatar_url"
       :isSelected="selectedId === league.id"
       @click.native="handleClick(league.id)"
+      @upload="handleUpload"
      />
      <LeagueAdd @click.native="$emit('addLeague')" />
+    <LeagueUpload ref="upload" />
   </div>
 </template>
 
 <script>
 import LeagueCard from './LeagueCard';
 import LeagueAdd from './LeagueAdd';
+import LeagueUpload from './LeagueUpload';
 
 export default {
   components: {
     LeagueCard,
-    LeagueAdd
+    LeagueAdd,
+    LeagueUpload
   },
   props: {
     leagues: Array,
@@ -31,6 +35,10 @@ export default {
   methods: {
     handleClick(id) {
       this.$emit("selected", id)
+    },
+
+    handleUpload(id) {
+      this.$refs.upload.open(id)
     }
   }
 }
