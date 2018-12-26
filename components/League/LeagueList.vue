@@ -2,22 +2,36 @@
   <div class="league-list">
     <LeagueCard
       v-for="league in leagues"
-      :key="league.name"
+      :key="league.id"
+      :id="league.id"
       :name="league.name"
       :intro="league.intro"
-      :avatar="league.avatar_url" />
+      :avatar="league.avatar_url"
+      :isSelected="selectedId === league.id"
+      @click.native="handleClick(league.id)"
+     />
+     <LeagueAdd @click.native="$emit('addLeague')" />
   </div>
 </template>
 
 <script>
 import LeagueCard from './LeagueCard';
+import LeagueAdd from './LeagueAdd';
 
 export default {
   components: {
-    LeagueCard
+    LeagueCard,
+    LeagueAdd
   },
   props: {
-    leagues: Array
+    leagues: Array,
+    selectedId: Number,
+  },
+
+  methods: {
+    handleClick(id) {
+      this.$emit("selected", id)
+    }
   }
 }
 </script>
