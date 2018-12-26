@@ -1,14 +1,17 @@
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['exports', 'echarts'], factory);
-    } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
-        // CommonJS
-        factory(exports, require('echarts'));
-    } else {
-        // Browser globals
-        factory({}, root.echarts);
-    }
+    //     if (typeof define === 'function' && define.amd) {
+    //         // AMD. Register as an anonymous module.
+    //         console.log('444444')
+    //         define(['exports', 'echarts'], factory);
+    //     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+    //         // CommonJS
+    //         console.log('9999999')
+    factory(exports, require('echarts'));
+//     } else {
+//         // Browser globals
+//         console.log('111111')
+//         factory({}, root.echarts);
+//     }
 }(this, function (exports, echarts) {
     var log = function (msg) {
         if (typeof console !== 'undefined') {
