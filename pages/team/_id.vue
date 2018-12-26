@@ -1,13 +1,20 @@
 <template>
   <!-- <div class="d-flex" style="background:linear-gradient(45deg, #ffffff 50%, #eef1f6 50%); heigth: 100%;" > -->
-  <div class="d-flex" style="">
+  <div class="d-flex" style>
     <!-- <aside class="position-fixed top-0 bottom-0 left-0 right-0 col-md-4 col-lg-3 hide-md hide-sm" style="background-color: #58AF9B" >
       <img v-bind:src="team.avatar" style="width: 200px;" class="border-dashed border-blue-light circle d-block p-3 mx-auto my-4" >
       <p class="h1 text-center text-white">{{team.name}}</p>
       <p class="h6 text-white px-4">{{team.desc}}</p>
-    </aside> -->
-    <aside class="position-relative col-md-4 col-lg-3 hide-md hide-sm" style="background-color: #58AF9B" >
-      <img v-bind:src="team.avatar" style="width: 200px;" class="border-dashed border-blue-light circle d-block p-3 mx-auto my-4" >
+    </aside>-->
+    <aside
+      class="position-relative col-md-4 col-lg-3 hide-md hide-sm"
+      style="background-color: #58AF9B"
+    >
+      <img
+        v-bind:src="team.avatar"
+        style="width: 200px;"
+        class="border-dashed border-blue-light circle d-block p-3 mx-auto my-4"
+      >
       <p class="h1 text-center text-white">{{team.name}}</p>
       <p class="h6 text-white px-4">{{team.desc}}</p>
     </aside>
@@ -15,40 +22,34 @@
       <div class="mx-4 pb-4">
         <div class="bg-white border rounded-2 box-shadow mb-4" style="height: 400px">
           <no-ssr>
-              <ve-line :data="chartData"></ve-line>
+            <ve-line :data="chartData"></ve-line>
           </no-ssr>
         </div>
         <div class="bg-white border rounded-2 box-shadow">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span>比赛历史</span>
+              <span class="h4">比赛历史</span>
             </div>
-            <div v-for="game in historyData" :key="game" class="border-bottom">
-              <div class="d-flex flex-justify-center flex-items-center mb-4">
-                <div class="d-flex flex-justify-center flex-items-center">
-                  <img
-                    v-bind:src="game.avatarA"
-                    class="circle mr-2"
-                    style="width: 40px;height: 40px;"
-                  >
-                  <label class="flex-auto text-center h1">{{game.a}}</label>
+            <div class="d-flex flex-wrap">
+              <div v-for="game in historyData" :key="game" class="border m-2 px-4 pt-4 box-shadow-large rounded-2" style="width:48%">
+                <div class="mb-2">
+                  <div class="d-flex flex-items-center mb-2">
+                    <img v-bind:src="game.avatarA" class="circle mr-2" style="width: 40px;height: 40px;" >
+                    <label>{{game.a}}</label>
+                    <label class="flex-auto text-right">{{game.scoreA}}</label>
+                  </div>
+                  <div class="d-flex  flex-items-center">
+                    <img v-bind:src="game.avatarB" class="circle mr-2" style="width:40px;height:40px;" >
+                    <label>{{game.b}}</label>
+                    <label class="flex-auto text-right">{{game.scoreB}}</label>
+                  </div>
                 </div>
-                <div class="flex-auto d-flex flex-justify-center flex-items-center">
-                  <label class="h1">{{game.scoreA}}</label>
-                  <label class="mx-4 h1">vs</label>
-                  <label class="h1">{{game.scoreB}}</label>
-                </div>
-                <div class="d-flex flex-justify-center flex-items-center">
-                  <img
-                    v-bind:src="game.avatarB"
-                    class="circle mr-2"
-                    style="width:40px;height:40px;"
-                  >
-                  <label class="flex-auto text-center h1">{{game.b}}</label>
-                </div>
+                <p class="text-right">{{game.date}}</p>
               </div>
-              <p class="text-right">{{game.date}}</p>
             </div>
+            <!-- <div class="flex-auto d-flex flex-justify-center flex-items-center">
+                  <label class="mx-4 h1">:</label>
+            </div>-->
           </el-card>
         </div>
       </div>
@@ -89,10 +90,10 @@ export default {
           date: "2016-05-02"
         },
         {
-          a: "aaaaaa",
+          a: "aaa",
           avatarA: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
           scoreA: 1,
-          b: "bbbbbb",
+          b: "bbbb",
           avatarB: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
           scoreB: 1,
           date: "2016-05-02"
