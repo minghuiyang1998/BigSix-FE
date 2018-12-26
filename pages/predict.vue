@@ -1,5 +1,8 @@
 <template>
-  <section class=" d-flex flex-justify-center flex-items-center" style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;">
+  <section
+    class="d-flex flex-justify-center flex-items-center"
+    style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;"
+  >
     <div class="col-md-8 col-lg-8 text-gray bg-white py-4 px-4 rounded-2 border box-shadow-large">
       <el-steps :active="step" finish-status="success" align-center>
         <el-step title="选择联赛" description></el-step>
@@ -7,7 +10,7 @@
         <el-step title="选择参赛队" description></el-step>
         <el-step title="预测" description></el-step>
       </el-steps>
-      <div v-if="currentTable === 'league'">
+      <div v-if="currentTable === 'league'" key="0">
         <el-table
           ref="singleTable"
           :data="leagueData"
@@ -19,13 +22,13 @@
         </el-table>
         <div class="d-flex mt-4 flex-justify-between flex-items-center">
           <el-button disabled>上一步</el-button>
-          <el-button @click="onNextButtonClick()">下一步</el-button>
+          <el-button @click="onNextButtonClick()" >下一步</el-button>
         </div>
       </div>
-      <div v-else-if="currentTable === 'teamA'">
+      <div v-else-if="currentTable === 'teamA'" key="1">
         <el-table
           ref="singleTable"
-          :data="teamAData"
+          :data="teamData"
           highlight-current-row
           @row-click="onTeamASelect"
           style="width: 100%"
@@ -37,10 +40,10 @@
           <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
-      <div v-else-if="currentTable === 'teamB'">
+      <div v-else-if="currentTable === 'teamB'" key="2">
         <el-table
           ref="singleTable"
-          :data="teamBData"
+          :data="teamData"
           highlight-current-row
           @row-click="onTeamBSelect"
           style="width: 100%"
@@ -54,21 +57,29 @@
       </div>
       <div v-else-if="currentTable === 'predict'">
         <div v-if="isLoading" style="width:200px;height:200px;" class="mx-auto">
-          <!-- <lottie
-            :options="defaultOptions"
-            :height="200"
-            :width="200"
-            v-on:animCreated="handleAnimation"
-          /> -->
+          <div ref="lavContainer" class="position-absolute left-0 right-0 mx-auto " style="width: 200px; height: 200px; top:-100px;"></div>
         </div>
-        <div v-else class="d-flex m-6 flex-justify-between flex-items-center" >
+        <div v-else class="d-flex m-6 flex-justify-between flex-items-center">
           <div class="text-center">
-            <img v-bind:src="result.teamA.avatar" class="circle mr-2" style="width: 40px;height: 40px;" >
+            <img
+              v-bind:src="result.teamA.avatar"
+              class="circle mr-2"
+              style="width: 40px;height: 40px;"
+            >
             <div class="flex-auto h1">{{result.teamA.name}}</div>
           </div>
-          <el-progress :percentage="result.rate" class="flex-auto mx-6 "  :stroke-width="18" color="#57B08F" ></el-progress>
+          <el-progress
+            :percentage="result.rate"
+            class="flex-auto mx-6"
+            :stroke-width="18"
+            color="#57B08F"
+          ></el-progress>
           <div class="text-center">
-            <img v-bind:src="result.teamB.avatar" class="circle mr-2" style="width:40px;height:40px;" >
+            <img
+              v-bind:src="result.teamB.avatar"
+              class="circle mr-2"
+              style="width:40px;height:40px;"
+            >
             <div class="flex-auto h1">{{result.teamB.name}}</div>
           </div>
         </div>
@@ -78,72 +89,72 @@
 </template>
 
 <script>
-// import loading from "../assets/lottie/confetti.json";
-// import success from "../assets/lottie/star_success.json";
-
 const tableStatesENUM = ["league", "teamA", "teamB",'predict'];
+import lottie from "lottie-web";
+
 export default {
-  fetchData() {},
+  async asyncData({ $axios }) {
+     let leagueData = [
+        {
+          name: "league-name"
+        },
+        {
+          name: "league-name"
+        },
+        {
+          name: "league-name"
+        },
+        {
+          name: "league-name"
+        }]
+
+    let teamData = [
+        {
+          name: "team-name_A"
+        },
+        {
+          name: "team-name_A"
+        },
+        {
+          name: "team-name_A"
+        },
+        {
+          name: "team-name_A"
+        },
+      ]
+    return {
+      leagueData: leagueData,
+      teamData: teamData,
+    };
+  },
   data() {
     return {
       currentTable: "league",
       isLoading: true,
       result: {},
-      leagueData: [
-        {
-          name: "league-name"
-        },
-        {
-          name: "league-name"
-        },
-        {
-          name: "league-name"
-        },
-        {
-          name: "league-name"
-        },
-      ],
-      teamAData: [
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
-      ],
-      teamBData: [
-        {
-          name: "team-name_B"
-        },
-        {
-          name: "team-name_B"
-        },
-        {
-          name: "team-name_B"
-        },
-        {
-          name: "team-name_B"
-        },
-      ],
+      leagueData: [],
+      teamData: [],
+
       currentLeague: null,
       currentA: null,
       currentB: null,
 
-      // defaultOptions: { animationData: success },
-      // animationSpeed: 1,
       // anim: {},
       step: 0
     };
   },
-
+  mounted() {
+    this.anim = lottie.loadAnimation({
+      container: this.$refs.lavContainer,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "/star_success.json",
+    });
+  },
   methods: {
     _predict() {
+
       setTimeout(() => {
         this.result = {
           teamA: {
