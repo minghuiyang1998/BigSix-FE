@@ -63,7 +63,7 @@ export default {
       renderer: "svg",
       loop: true,
       autoplay: true,
-      path: "../assets/lottie/dino_dance.json",
+      path: "/dino_dance.json",
     });
   },
   methods: {
