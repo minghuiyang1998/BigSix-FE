@@ -54,12 +54,12 @@
       </div>
       <div v-else-if="currentTable === 'predict'">
         <div v-if="isLoading" style="width:200px;height:200px;" class="mx-auto">
-          <lottie
+          <!-- <lottie
             :options="defaultOptions"
             :height="200"
             :width="200"
             v-on:animCreated="handleAnimation"
-          />
+          /> -->
         </div>
         <div v-else class="d-flex m-6 flex-justify-between flex-items-center" >
           <div class="text-center">
@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import loading from "../assets/lottie/confetti.json";
-import success from "../assets/lottie/star_success.json";
+// import loading from "../assets/lottie/confetti.json";
+// import success from "../assets/lottie/star_success.json";
 
 const tableStatesENUM = ["league", "teamA", "teamB",'predict'];
 export default {
@@ -135,9 +135,9 @@ export default {
       currentA: null,
       currentB: null,
 
-      defaultOptions: { animationData: success },
-      animationSpeed: 1,
-      anim: {},
+      // defaultOptions: { animationData: success },
+      // animationSpeed: 1,
+      // anim: {},
       step: 0
     };
   },
