@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="section">
+    <div class="section" v-loading="teamLoading">
       <h4>队伍列表</h4>
       <TeamList />
     </div>
@@ -40,7 +40,8 @@ import LeagueUpload from './LeagueUpload';
 
 export default {
   props: {
-    league: Object
+    league: Object,
+    teamLoading: Boolean,
   },
 
   components: {

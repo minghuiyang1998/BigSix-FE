@@ -16,7 +16,7 @@
         <el-menu-item index="/register">注册</el-menu-item>
       </template>
     </el-menu>
-    <el-dropdown trigger="click">
+    <el-dropdown v-if="isLogin" trigger="click">
       <avatar inline :username="userInfo.username" :size="32"></avatar>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>退出登录</el-dropdown-item>
