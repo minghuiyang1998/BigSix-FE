@@ -1,6 +1,7 @@
 <template>
   <div class="team-list">
     <team-card
+      v-if="teams.length > 0"
       v-for="team in teams"
       :key="team.id"
       :team="team"
@@ -25,9 +26,10 @@ export default {
 <style lang="scss" scoped>
 .team-list {
   display: flex;
-  margin: 0 -8px;
+  flex-wrap: wrap;
+  margin: -8px;
   >* {
-    padding: 0 8px;
+    padding: 8px;
   }
 }
 </style>

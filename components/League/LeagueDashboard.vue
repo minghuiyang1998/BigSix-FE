@@ -10,8 +10,8 @@
           <p><b>联赛名称: </b>{{league.name}}</p>
           <p>
             <b>联赛类型:</b>
-            <span v-if="league.leagueType===1"><font-awesome-icon icon="futbol" /> 足球</span>
-            <span v-if="league.leagueType===2"><font-awesome-icon icon="basketball-ball" /> 篮球</span>
+            <span v-if="league.leagueType===1"><no-ssr><font-awesome-icon icon="futbol" /></no-ssr> <span>足球</span></span>
+            <span v-if="league.leagueType===2"><no-ssr><font-awesome-icon icon="basketball-ball" /></no-ssr> <span>篮球</span></span>
           </p>
           <p><b>联赛简介: </b>{{league.introduction}}</p>
           <!-- <p>创建时间</p> -->
@@ -27,6 +27,7 @@
     </div>
     <div class="section" v-loading="matchesLoading">
       <h4>近期比赛</h4>
+      <MatchList :matches="matches" />
     </div>
 
     <LeagueUpload ref="upload" />
@@ -35,6 +36,7 @@
 
 <script>
 import { TeamList } from '../Team';
+import { MatchList } from '../Match';
 import LeagueAvatar from './LeagueAvatar';
 import LeagueUpload from './LeagueUpload';
 
@@ -43,11 +45,13 @@ export default {
     league: Object,
     teamLoading: Boolean,
     matchesLoading: Boolean,
-    teams: Array
+    teams: Array,
+    matches: Array,
   },
 
   components: {
     TeamList,
+    MatchList,
     LeagueAvatar,
     LeagueUpload
   },
