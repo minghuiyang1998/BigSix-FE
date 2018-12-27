@@ -1,23 +1,8 @@
 import { Message } from 'element-ui';
 
 export const state = () => ({
-  leagues: [
-    {
-      id: 1,
-      name: 'NBA',
-      leagueType: 2,
-      introduction: "The National Basketball Association is a men's professional basketball league in North America; composed of 30 teams. It is widely considered to be the premier men's professional basketball league in the world.",
-      avatarUrl: "https://theundefeated.com/wp-content/uploads/2017/05/nba-logo.png"
-    },
-    {
-      id: 2,
-      name: "La Liga",
-      leagueType: 1,
-      introduction: "The Campeonato Nacional de Liga de Primera División, commonly known as La Liga, is the men's top professional football division of the Spanish football league system.",
-      avatarUrl: "https://files.laliga.es/seccion_logos/laliga-v-300x300_2018.jpg"
-    }
-  ],
-  selectedId: 1,
+  leagues: [],
+  selectedId: null,
 
   isFetching: false,
   isCreating: false,
@@ -36,8 +21,6 @@ export const mutations = {
 
   SET_LEAGUES(state, leagues) {
     state.leagues = leagues
-    if (!state.selectedId)
-      state.selectedId = leagues[0].id
   },
 
   ADD_LEAGUE(state, league) {
@@ -54,16 +37,21 @@ export const mutations = {
 }
 
 export const actions = {
-  selectLeagueById({ commit, dispatch }, id) {
+  async selectLeagueById({ commit, dispatch }, id) {
     commit('UPDATE_SELECTED_ID', id);
-    dispatch('team/getTeamsByLeagues', id)
+    await dispatch('team/getTeamsByLeagues', id, { root: true })
   },
 
-  async getLeagues({ commit }) {
+  async getLeagues({ commit, state, dispatch }) {
     try {
       commit("SET_IS_FETCHING", true)
       const res = await this.$axios.$get('/api/league/league');
       commit("SET_LEAGUES", res)
+
+      if (!res.find(league => league.id === state.selectedId)) {
+        await dispatch('selectLeagueById', res[0].id)
+      }
+
     } catch(err) {
       Message.error("无法获取联赛列表");
       console.error(err)

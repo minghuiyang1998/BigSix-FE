@@ -57,6 +57,10 @@ export default {
     title: '我的联赛'
   },
 
+  async fetch({ store }) {
+    await store.dispatch('league/getLeagues');
+  },
+
   data() {
     return {
       dialogVisible: false,
