@@ -14,17 +14,32 @@
     </aside>
     <main class="col-md-8 col-lg-9">
       <div class="mx-4">
-        <div
-          ref="chartContainer"
-          class="bg-white border rounded-2 box-shadow mb-4"
-          style="height: 400px"
-        ></div>
+
+        <el-card class="mb-5">
+          <h4 slot="header">近期得分失分统计</h4>
+            <no-ssr>
+              <vue-frappe
+                id="test"
+                :labels="chartData.xData"
+                type="axis-mixed"
+                :height="300"
+                :colors="['#08a500', '#e40a0a']"
+                :dataSets="ds">
+            </vue-frappe>
+          </no-ssr>
+            <!-- <div
+              ref="chartContainer"
+              class="bg-white border rounded-2 box-shadow mb-4"
+              style="height: 400px"
+            ></div> -->
+        </el-card>
         <div class="bg-white border rounded-2 box-shadow">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="h4">比赛历史</span>
             </div>
-            <div class="d-flex flex-wrap">
+            <MatchList :matches="history" />
+            <!-- <div class="d-flex flex-wrap">
               <div v-for="game in history" :key="game" class="col-md-6 col-sm-12">
                 <div class="border m-2 px-4 pt-4 box-shadow rounded-2">
                   <div class="mb-2">
@@ -58,7 +73,7 @@
               :total="historyData.total"
               :current-page="historyData.currentPage"
               @current-change="onPaginationButtonClick"
-            ></el-pagination>
+            ></el-pagination> -->
           </el-card>
         </div>
       </div>
@@ -68,9 +83,15 @@
 
 <script>
 import echarts from "echarts";
+import { MatchList } from '@/components/Match';
+
 require("../../assets/javascript/customed.js");
 
 export default {
+  components: {
+    MatchList,
+  },
+
   async asyncData({ params, $axios }) {
     let team;
     try {
@@ -89,8 +110,7 @@ export default {
     try {
       let res = await $axios.$get(`/api/league/match?team_id=${params.id}`);
       res.map((match) => {
-        match.matchDate = match.matchDate.replace(/(\d{4})(\d{2})(\d{2})/, '$2月$3日')
-        xData.push( match.matchDate);
+        xData.push(match.matchDate.replace(/(\d{4})(\d{2})(\d{2})/, '$2月$3日'));
         yData_lose.push(match.guestTeamScore);
         yData_win.push(match.hostTeamScore);
         return match
@@ -107,51 +127,51 @@ export default {
     };
   },
   mounted() {
-    let myChart = echarts.init(this.$refs.chartContainer, "customed");
-    let option = {
-      title: {},
-      tooltip: {
-        trigger: "axis"
-      },
-      grid: {
-        left: "3%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true
-      },
-      toolbox: {},
-      xAxis: {
-        type: "category",
-        boundaryGap: false,
-        data: this.chartData.xData
-      },
-      yAxis: {
-        type: "value"
-      },
-      series: [
-        {
-          itemStyle: {
-            normal: {
-              color: "#48af98"
-            }
-          },
-          name: "得分",
-          type: "line",
-          data: this.chartData.yData_win
-        },
-        {
-          itemStyle: {
-            normal: {
-              color: "#58af98"
-            }
-          },
-          name: "失分",
-          type: "line",
-          data: this.chartData.yData_lose
-        }
-      ]
-    };
-    myChart.setOption(option);
+    // let myChart = echarts.init(this.$refs.chartContainer, "customed");
+    // let option = {
+    //   title: {},
+    //   tooltip: {
+    //     trigger: "axis"
+    //   },
+    //   grid: {
+    //     left: "3%",
+    //     right: "4%",
+    //     bottom: "3%",
+    //     containLabel: true
+    //   },
+    //   toolbox: {},
+    //   xAxis: {
+    //     type: "category",
+    //     boundaryGap: false,
+    //     data: this.chartData.xData
+    //   },
+    //   yAxis: {
+    //     type: "value"
+    //   },
+    //   series: [
+    //     {
+    //       itemStyle: {
+    //         normal: {
+    //           color: "#08a500"
+    //         }
+    //       },
+    //       name: "得分",
+    //       type: "line",
+    //       data: this.chartData.yData_win
+    //     },
+    //     {
+    //       itemStyle: {
+    //         normal: {
+    //           color: "#e40a0a"
+    //         }
+    //       },
+    //       name: "失分",
+    //       type: "line",
+    //       data: this.chartData.yData_lose
+    //     }
+    //   ]
+    // };
+    // myChart.setOption(option);
   },
   data() {
     return {
@@ -171,6 +191,16 @@ export default {
         yData_lose: []
       }
     };
+  },
+
+  computed: {
+    ds() {
+      return [{
+                  name: "得分", chartType: "line", values: this.chartData.yData_win
+                }, {
+                  name: "失分", chartType: "line", values: this.chartData.yData_lose
+                }]
+    }
   },
   methods: {
     _getHistoryData(param) {

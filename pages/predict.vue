@@ -107,7 +107,7 @@
               :stroke-width="8"
               class="my-2"
             ></el-progress>
-            <div>客负</div>
+            <div>主负</div>
             <el-progress
               :percentage="guestWinRate"
               color="#ec6a6a"
