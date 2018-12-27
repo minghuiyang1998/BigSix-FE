@@ -5,17 +5,8 @@
     <LeagueAvatar :avatar="avatar" />
     <div class="league-info">
       <div class="league-info__name">{{name}}</div>
-      <div v-clampy="2" class="league-info__intro">{{intro}}</div>
+      <div v-clampy="2" class="league-info__intro">{{introduction}}</div>
     </div>
-    <!-- <el-dropdown trigger="click" @command="handleCommand">
-      <div class="league-dropdown-button">
-        <font-awesome-icon icon="ellipsis-v" fixed-width :mask="['far', 'circle']" />
-      </div>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="upload">上传数据</el-dropdown-item>
-        <el-dropdown-item command="detail">查看详情</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown> -->
   </div>
 </template>
 
@@ -25,7 +16,7 @@ export default {
   props: {
     id: Number,
     name: String,
-    intro: String,
+    introduction: String,
     avatar: String,
     isSelected: Boolean,
   },

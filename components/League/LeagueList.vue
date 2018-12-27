@@ -5,8 +5,8 @@
       :key="league.id"
       :id="league.id"
       :name="league.name"
-      :intro="league.intro"
-      :avatar="league.avatar_url"
+      :introduction="league.introduction"
+      :avatar="league.avatarUrl"
       :isSelected="selectedId === league.id"
       @click.native="handleClick(league.id)"
      />

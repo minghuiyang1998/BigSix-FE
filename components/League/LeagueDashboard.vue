@@ -7,12 +7,17 @@
       <h4>联赛信息</h4>
       <div class="d-flex flex-justify-between">
         <div class="league-info">
-          <p>联赛名称: {{league.name}}</p>
-          <p>联赛简介: {{league.intro}}</p>
+          <p><b>联赛名称: </b>{{league.name}}</p>
+          <p>
+            <b>联赛类型:</b>
+            <span v-if="league.leagueType===1"><font-awesome-icon icon="futbol" /> 足球</span>
+            <span v-if="league.leagueType===2"><font-awesome-icon icon="basketball-ball" /> 篮球</span>
+          </p>
+          <p><b>联赛简介: </b>{{league.introduction}}</p>
           <!-- <p>创建时间</p> -->
         </div>
         <div>
-          <LeagueAvatar :avatar="league.avatar_url" />
+          <LeagueAvatar :avatar="league.avatarUrl" />
         </div>
       </div>
     </div>
