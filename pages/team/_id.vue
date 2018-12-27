@@ -92,6 +92,12 @@ export default {
     MatchList,
   },
 
+  head() {
+    return {
+      title: '队伍详情：' + this.team.name
+    }
+  },
+
   async asyncData({ params, $axios }) {
     let team;
     try {
@@ -196,10 +202,10 @@ export default {
   computed: {
     ds() {
       return [{
-                  name: "得分", chartType: "line", values: this.chartData.yData_win
-                }, {
-                  name: "失分", chartType: "line", values: this.chartData.yData_lose
-                }]
+          name: "得分", chartType: "line", values: this.chartData.yData_win
+        }, {
+          name: "失分", chartType: "line", values: this.chartData.yData_lose
+        }]
     }
   },
   methods: {

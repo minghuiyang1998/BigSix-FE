@@ -43,6 +43,9 @@ export default {
       anim: {}
     };
   },
+  head: {
+    title: '登录'
+  },
   mounted() {
     this.anim = lottie.loadAnimation({
       container: this.$refs.lavContainer,

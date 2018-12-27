@@ -1,12 +1,12 @@
 <template>
-  <div class="team-card">
+  <nuxt-link tag="a" :to="`team/${team.id}`" class="team-card">
     <el-card shadow="hover">
-      <router-link tag="a" :to="`team/${team.id}`" class="d-flex flex-items-center">
+      <div class="d-flex flex-items-center">
         <TeamAvatar class="mr-3" :avatar="team.avatarUrl" />
         <span>{{team.name}}</span>
-      </router-link>
+      </div>
     </el-card>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
@@ -27,6 +27,9 @@ export default {
 .team-card {
   max-width: 300px;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  display: block;
   a {
     color: inherit;
     text-decoration: none;

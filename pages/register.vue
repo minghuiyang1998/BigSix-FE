@@ -35,6 +35,9 @@ export default {
       anim: {}
     };
   },
+  head: {
+    title: '注册'
+  },
   mounted() {
     // this.anim = lottie.loadAnimation({
     //   container: this.$refs.lavContainer,

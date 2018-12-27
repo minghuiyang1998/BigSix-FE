@@ -34,14 +34,17 @@ export default {
     Avatar
   },
 
-  data() {
-    return {
-      path: this.$route.path
-    }
-  },
+  // data() {
+  //   return {
+  //     path:
+  //   }
+  // },
 
   computed: {
-    ...mapState('user', ['isLogin', 'userInfo'])
+    ...mapState('user', ['isLogin', 'userInfo']),
+    path() {
+      return this.$route.path
+    }
   }
 }
 </script>

@@ -24,8 +24,9 @@
           >{{league.name}}</div>
         </div>
         <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
-          <el-button disabled>上一步</el-button>
-          <el-button @click="onNextButtonClick()">下一步</el-button>
+          <!-- <el-button disabled>上一步</el-button> -->
+          <div></div>
+          <el-button type="primary" :disabled="!this.current.league" @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
@@ -42,7 +43,7 @@
         </div>
         <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
-          <el-button @click="onNextButtonClick()">下一步</el-button>
+          <el-button type="primary" :disabled="!this.current.teamA" @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
@@ -59,7 +60,7 @@
         </div>
         <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
-          <el-button @click="onNextButtonClick()">下一步</el-button>
+          <el-button type="primary" :disabled="!this.current.teamB" @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
@@ -76,7 +77,7 @@
         </div>
         <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
-          <el-button @click="onPredictButtonClick()">开始预测</el-button>
+          <el-button type="primary" :disabled="!this.current.rule" @click="onPredictButtonClick()">开始预测</el-button>
         </div>
       </div>
 
@@ -107,7 +108,7 @@
               :stroke-width="8"
               class="my-2"
             ></el-progress>
-            <div>主负</div>
+            <div>客胜</div>
             <el-progress
               :percentage="guestWinRate"
               color="#ec6a6a"
@@ -119,6 +120,10 @@
             <img v-bind:src="result.teamB.avatar" class="img  mr-2">
             <!-- <div class="flex-auto h1">{{result.teamB.name}}</div> -->
           </div>
+        </div>
+
+        <div class="d-flex mt-4 flex-justify-center flex-items-center px-4">
+          <el-button type="primary" @click="restart">重新开始</el-button>
         </div>
       </div>
     </div>
@@ -152,6 +157,9 @@ export default {
       rules: rules
     };
   },
+  head: {
+    title: '比赛预测'
+  },
   data() {
     return {
       currentTable: "league",
@@ -175,10 +183,10 @@ export default {
       rules: [],
 
       current: {
-        league: 1,
-        teamA: 1,
-        teamB: 4,
-        rule: 4
+        league: null,
+        teamA: null,
+        teamB: null,
+        rule: null
       },
 
       anim: {},
@@ -241,6 +249,7 @@ export default {
     },
     onTeamBSelect(val) {
       console.log(val);
+      if (val === this.current.teamA) return;
       this.current.teamB = val;
     },
     onRuleSelect(val) {
@@ -259,6 +268,11 @@ export default {
       this.step = 5;
       this._changeCurrentTable(1);
       this._predict();
+    },
+
+    restart() {
+      this.step = 0;
+      this.currentTable="league"
     }
   }
 };
@@ -270,7 +284,11 @@ export default {
   height: 100px;
 }
 
-.table-item:hover {
+.table-item:not(.another) {
+  cursor: pointer;
+}
+
+.table-item:not(.another):hover {
   box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15);
   /* background-color: rgba(27, 31, 35, 0.15); */
 }
@@ -283,6 +301,7 @@ export default {
 
 .another {
   /* box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15); */
+  user-select: none;
   background-color: #ffdce0;
 }
 </style>
