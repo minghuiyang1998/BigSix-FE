@@ -34,9 +34,7 @@
 <script>
 import lottie from "lottie-web";
 export default {
-  async asyncData({ $axios }) {
-
-  },
+  async asyncData({ $axios }) {},
   data() {
     return {
       user: {
@@ -52,17 +50,41 @@ export default {
       renderer: "svg",
       loop: true,
       autoplay: true,
-      path: "/dino_dance.json",
+      path: "/dino_dance.json"
     });
   },
   methods: {
     async submitForm() {
       if (!this.user.username || !this.user.password) {
-        this.$message('必须填完噢：）～');
-        return
+        this.$message("必须填完噢：）～");
+        return;
       } else {
-        const responese = await this.$axios.$post('/api/auth/signin', this.user)
-        console.log(responese)
+
+        try {
+          let res = await this.$axios.$post(
+            "/api/auth/signin",
+            this.user
+          );
+
+          if (res.ok) {
+            this.$store.dispatch("user/setUser", res);
+            this.$router.push('/')
+          } else {
+            this.$message(res.message)
+          }
+          // if (res.status < 400) {
+          //   if (res.data.code && res.data.code < 400) {
+          //     this.$store.dispatch("user/setUser", res);
+          //     redirect('/')
+          //   } else {
+          //     throw res.data;
+          //   }
+          // } else {
+          //   throw { message: res.statusText };
+          // }
+        } catch (err) {
+            this.$message(err.message);
+        }
       }
     }
   }

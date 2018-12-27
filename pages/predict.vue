@@ -4,7 +4,7 @@
     style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;"
   >
     <div class="col-md-8 col-lg-8 text-gray bg-white py-4 rounded-2 border box-shadow-large">
-      <el-steps :active="step" align-center>
+      <el-steps :active="step" finish-status="success" align-center>
         <el-step title="选择联赛" description></el-step>
         <el-step title="选择参赛队" description></el-step>
         <el-step title="选择参赛队" description></el-step>
@@ -13,58 +13,58 @@
       </el-steps>
 
       <div v-show="currentTable === 'league'">
-        <div class="text-center mt-2 f4">联赛名称</div>
+        <div class="text-center my-4 f4">联赛名称</div>
         <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="league in leagues"
-            @click="onLeagueSelect(league.lid)"
+            @click="onLeagueSelect(league.id)"
             class="table-item  text-center py-3"
-            :class="league.lid == current.league ? 'selected':''"
-            :key="league.lid"
+            :class="league.id == current.league ? 'selected':''"
+            :key="league.id"
           >{{league.name}}</div>
         </div>
-        <div class="d-flex mt-4 flex-justify-between flex-items-center">
+        <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button disabled>上一步</el-button>
           <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
       <div v-show="currentTable === 'teamA'">
-        <div class="text-center mt-2 f4">球队名称</div>
+        <div class="text-center my-4 f4">球队名称</div>
         <div class="overflow-auto " style="height: 300px;">
           <div
             v-for="team in teams"
-            @click="onTeamASelect(team.tid)"
+            @click="onTeamASelect(team.id)"
             class="table-item  text-center py-3 "
-            :class="team.tid == current.teamA ? 'selected':''"
-            :key="team.tid"
+            :class="team.id == current.teamA ? 'selected':''"
+            :key="team.id"
           >{{team.name}}</div>
         </div>
-        <div class="d-flex mt-4 flex-justify-between flex-items-center">
+        <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
           <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
       <div v-show="currentTable === 'teamB'">
-        <div class="text-center mt-2 f4">球队名称</div>
+        <div class="text-center my-4 f4">球队名称</div>
         <div class="overflow-auto " style="height: 300px;">
           <div
             v-for="team in teams"
-            @click="onTeamBSelect(team.tid)"
+            @click="onTeamBSelect(team.id)"
             class="table-item  text-center py-3 "
-            :class="team.tid == current.teamA ? 'another':(team.tid == current.teamB ? 'selected' : '')"
-            :key="team.tid"
+            :class="team.id == current.teamA ? 'another':(team.id == current.teamB ? 'selected' : '')"
+            :key="team.id"
           >{{team.name}}</div>
         </div>
-        <div class="d-flex mt-4 flex-justify-between flex-items-center">
+        <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
           <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
 
       <div v-show="currentTable === 'rule'">
-        <div class="text-center mt-2 f4">赛制</div>
+        <div class="text-center my-4 f4">赛制</div>
         <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="rule in rules"
@@ -74,7 +74,7 @@
             :key="rule.rid"
           >{{rule.rule}}</div>
         </div>
-        <div class="d-flex mt-4 flex-justify-between flex-items-center">
+        <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
           <el-button @click="onPredictButtonClick()">开始预测</el-button>
         </div>
@@ -93,13 +93,8 @@
             <div class="h1">{{result.teamA.name}}</div>
           </div>
           <div class="col-6 mx-6">
-            <el-progress :percentage="result.winRate" :stroke-width="8" class="my-2"></el-progress>
-            <el-progress
-              :percentage="result.loseRate"
-              color="#8e71c7"
-              :stroke-width="8"
-              class="my-2"
-            ></el-progress>
+            <el-progress :percentage="result.winRate" color="#57B08F" :stroke-width="8" class="my-2"></el-progress>
+            <el-progress :percentage="result.loseRate" color="#8e71c7" :stroke-width="8" class="my-2" ></el-progress>
             <el-progress :percentage="result.rate" color="#ec6a6a" :stroke-width="8" class="my-2"></el-progress>
           </div>
           <div class="col-3 text-center">
@@ -129,75 +124,16 @@ export default {
       console.log(e);
     }
 
-    let leagues = [
-      {
-        lid: 1,
-        name: "league-name"
-      },
-      {
-        lid: 2,
-        name: "league-name"
-      },
-      {
-        lid: 3,
-        name: "league-name"
-      },
-      {
-        lid: 4,
-        name: "league-name"
-      }
-    ];
-
-    let teams = [
-      {
-        tid: 1,
-        name: "team-name_A"
-      },
-      {
-        tid: 2,
-        name: "team-name_A"
-      },
-      {
-        tid: 3,
-        name: "team-name_A"
-      },
-      {
-        tid: 4,
-        name: "team-name_A"
-      }
-    ];
-
-    let rules = [
-      {
-        rid: 1,
-        rule: "1 vs 1"
-      },
-      {
-        rid: 2,
-        rule: "1 vs 1"
-      },
-      {
-        rid: 3,
-        rule: "1 vs 1"
-      },
-      {
-        rid: 4,
-        rule: "1 vs 1"
-      },
-      {
-        rid: 5,
-        rule: "1 vs 1"
-      },
-      {
-        rid: 6,
-        rule: "1 vs 1"
-      }
-    ];
+  let leagues
+  try {
+    leagues = await $axios.$get("/api/league/league")
+    console.log(leagues)
+  } catch(e) {
+    console.log(e)
+  }
 
     return {
       leagues: leagues,
-      teams: teams,
-      rules: rules
     };
   },
   data() {
@@ -224,8 +160,8 @@ export default {
 
       current: {
         league: 1,
-        teamA: 2,
-        teamB: 3,
+        teamA: 1,
+        teamB: 4,
         rule: 4
       },
 
@@ -264,8 +200,11 @@ export default {
     async _getTeamData() {
       //获取team
       try {
-      } catch (e) {
-        console.log(e);
+         let res = await this.$axios.$get(`/api/league/team?league_id=${this.current.league}`)
+         console.log('111',res)
+         this.teams = res
+      } catch(e) {
+        console.log(e)
       }
     },
     async _getRuleData() {
@@ -331,16 +270,17 @@ export default {
 
 .table-item:hover {
   box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15);
-  background-color: rgba(27, 31, 35, 0.15);
+  /* background-color: rgba(27, 31, 35, 0.15); */
 }
 
 .selected {
-  box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15);
-  background-color: rgba(27, 31, 35, 0.15);
+  /* box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15); */
+  background-color: #c7d2dc;
+  /* background-color: rgba(27, 31, 35, 0.15); */
 }
 
 .another {
-  box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15);
-  background-color: red;
+  /* box-shadow: 0 1px 15px rgba(27, 31, 35, 0.15); */
+  background-color: #ffdce0;
 }
 </style>
