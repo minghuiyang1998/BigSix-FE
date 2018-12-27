@@ -1,5 +1,8 @@
 <template>
   <el-card>
+    <div class="tools">
+      <el-button size="mini" type="primary" @click="$refs.upload.open(league.id)">上传比赛数据<i class="el-icon-upload el-icon--right"></i></el-button>
+    </div>
     <div class="section">
       <h4>联赛信息</h4>
       <div class="d-flex flex-justify-between">
@@ -20,12 +23,15 @@
     <div class="section">
       <h4>近期比赛</h4>
     </div>
+
+    <LeagueUpload ref="upload" />
   </el-card>
 </template>
 
 <script>
-import { TeamList } from '@/components/Team';
+import { TeamList } from '../Team';
 import LeagueAvatar from './LeagueAvatar';
+import LeagueUpload from './LeagueUpload';
 
 export default {
   props: {
@@ -34,7 +40,8 @@ export default {
 
   components: {
     TeamList,
-    LeagueAvatar
+    LeagueAvatar,
+    LeagueUpload
   },
   data() {
     return {
@@ -60,5 +67,9 @@ export default {
   h4 {
     margin-bottom: 1em;
   }
+}
+
+.tools {
+  text-align: right;
 }
 </style>
