@@ -30,7 +30,7 @@
       </div>
 
       <div v-show="currentTable === 'teamA'">
-        <div class="text-center my-4 f4">球队名称</div>
+        <div class="text-center my-4 f4">主队名称</div>
         <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="team in teams"
@@ -47,7 +47,7 @@
       </div>
 
       <div v-show="currentTable === 'teamB'">
-        <div class="text-center my-4 f4">球队名称</div>
+        <div class="text-center my-4 f4">客队名称</div>
         <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="team in teams"
@@ -68,11 +68,11 @@
         <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="rule in rules"
-            @click="onRuleSelect(rule.rid)"
+            @click="onRuleSelect(rule.id)"
             class="table-item text-center py-3"
-            :class="rule.rid == current.rule ? 'selected':''"
-            :key="rule.rid"
-          >{{rule.rule}}</div>
+            :class="rule.id == current.rule ? 'selected':''"
+            :key="rule.id"
+          >{{rule.name}}</div>
         </div>
         <div class="d-flex mt-4 flex-justify-between flex-items-center px-4">
           <el-button @click="onBackButtonClick()">上一步</el-button>
@@ -89,27 +89,35 @@
         ></div>
         <div v-if="!isLoading" class="d-flex m-6 flex-items-center">
           <div class="col-3 text-center">
-            <img v-bind:src="result.teamA.avatar" class="img circle mr-2">
-            <div class="h1">{{result.teamA.name}}</div>
+            <img v-bind:src="result.teamA.avatar" class="img  mr-2">
+            <!-- <div class="h1">{{result.teamA.name}}</div> -->
           </div>
           <div class="col-6 mx-6">
+            <div>主胜</div>
             <el-progress
-              :percentage="result.winRate"
+              :percentage="hostWinRate"
               color="#57B08F"
               :stroke-width="8"
               class="my-2"
             ></el-progress>
+            <div>平</div>
             <el-progress
-              :percentage="result.loseRate"
+              :percentage="drawGameRate"
               color="#8e71c7"
               :stroke-width="8"
               class="my-2"
             ></el-progress>
-            <el-progress :percentage="result.rate" color="#ec6a6a" :stroke-width="8" class="my-2"></el-progress>
+            <div>客负</div>
+            <el-progress
+              :percentage="guestWinRate"
+              color="#ec6a6a"
+              :stroke-width="8"
+              class="my-2"
+            ></el-progress>
           </div>
           <div class="col-3 text-center">
-            <img v-bind:src="result.teamB.avatar" class="img circle mr-2">
-            <div class="flex-auto h1">{{result.teamB.name}}</div>
+            <img v-bind:src="result.teamB.avatar" class="img  mr-2">
+            <!-- <div class="flex-auto h1">{{result.teamB.name}}</div> -->
           </div>
         </div>
       </div>
@@ -122,23 +130,7 @@ const tableStatesENUM = ["league", "teamA", "teamB", "rule", "predict"];
 import lottie from "lottie-web";
 
 export default {
-  fetch({ store, redirect }) {
-    if (!store.state.isLogin) {
-      console.log("not login!");
-      return redirect("/login");
-    }
-  },
   async asyncData({ $axios }) {
-    try {
-      let user = await $axios.$post("/api/auth/signin", {
-        username: "igulu",
-        password: "password"
-      });
-
-      console.log(user);
-    } catch (e) {
-      console.log(e);
-    }
 
     let leagues;
     try {
@@ -148,8 +140,16 @@ export default {
       console.log(e);
     }
 
+    let rules;
+    try {
+      rules = await $axios.$get("/api/prediction/type");
+    } catch (e) {
+      console.log(e);
+    }
+
     return {
-      leagues: leagues
+      leagues: leagues,
+      rules: rules
     };
   },
   data() {
@@ -159,16 +159,16 @@ export default {
       result: {
         teamA: {
           name: "",
-          avatar: ""
+          avatar: "https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=c7f168da968fa0ec6bca6c5f47fe328b/6a600c338744ebf8bf6dced6def9d72a6059a73f.jpg"
         },
         teamB: {
           name: "",
-          avatar: ""
+          avatar: "https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=16e9ea7973cb0a46912f836b0a0a9d41/3bf33a87e950352adc462d8b5b43fbf2b2118b09.jpg"
         },
-        winRate: "",
-        loseRate: "",
-        rate: ""
       },
+      hostWinRate: "",
+      drawGameRate: "",
+      guestWinRate: "",
 
       leagues: [],
       teams: [],
@@ -195,23 +195,17 @@ export default {
     });
   },
   methods: {
-    _predict() {
-      setTimeout(() => {
-        this.result = {
-          teamA: {
-            name: "aaa",
-            avatar: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4"
-          },
-          teamB: {
-            name: "bbb",
-            avatar: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4"
-          },
-          winRate: 30,
-          loseRate: 60,
-          rate: 90
-        };
-        this.isLoading = false;
-      }, 5000);
+    async _predict() {
+        try {
+          let res = await this.$axios.$get( `/api/prediction/prediction?host_team_id=${this.current.teamA}&guest_team_id=${this.current.teamB}&type_id=${this.current.rule}`);
+          this.hostWinRate = parseInt(res.hostWinRate * 100)
+          this.drawGameRate = parseInt(res.drawGameRate * 100)
+          this.guestWinRate = parseInt(res.guestWinRate * 100)
+          
+          this.isLoading = false
+        } catch (err) {
+            this.$message(err);
+        }
     },
     async _getTeamData() {
       //获取team
@@ -225,25 +219,15 @@ export default {
         console.log(e);
       }
     },
-    async _getRuleData() {
-      //获取rule
-      try {
-      } catch (e) {
-        console.log(e);
-      }
-    },
     _changeCurrentTable(step) {
       let index = tableStatesENUM.indexOf(this.currentTable);
       //即将要换上的表格
       let oldTable = tableStatesENUM[index];
       let newTable = tableStatesENUM[index + step];
       if (oldTable === "league" && newTable === "teamA") {
-        // 如果是team就要重新拉一次数据,因为league可能会不一样
         this._getTeamData();
-      } else if (oldTable === "teamB" && newTable === "rule") {
-        // 如果是rule也要重新拉一次数据，因为league可能会不一样
-        this._getRuleData();
       } else {
+
       }
       this.currentTable = newTable;
     },

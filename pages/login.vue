@@ -34,9 +34,6 @@
 <script>
 import lottie from "lottie-web";
 export default {
-  async asyncData({ $axios }) {
-
-  },
   data() {
     return {
       user: {
