@@ -1,3 +1,5 @@
+import { Message } from 'element-ui';
+
 export const state = () => ({
   leagues: [
     {
@@ -31,7 +33,8 @@ export const mutations = {
 
   SET_LEAGUES(state, leagues) {
     state.leagues = leagues
-    state.selectedId = leagues[0].id
+    if (!state.selectedId)
+      state.selectedId = leagues[0].id
   }
 }
 
@@ -41,7 +44,12 @@ export const actions = {
     commit('UPDATE_SELECTED_ID', id)
   },
 
-  getLeagues({ commit }) {
-
+  async getLeagues({ commit }) {
+    try {
+      const res = await this.$axios.$get('/api/league/league');
+      commit("SET_LEAGUES", res)
+    } catch(err) {
+      Message.error("无法获取联赛列表");
+    }
   }
 }
