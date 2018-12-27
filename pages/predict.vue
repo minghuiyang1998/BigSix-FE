@@ -14,11 +14,11 @@
 
       <div v-show="currentTable === 'league'">
         <div class="text-center mt-2 f4">联赛名称</div>
-        <div class="overflow-auto border-top" style="height: 200px;">
+        <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="league in leagues"
             @click="onLeagueSelect(league.lid)"
-            class="table-item border text-center py-3 mt-2"
+            class="table-item  text-center py-3"
             :class="league.lid == current.league ? 'selected':''"
             :key="league.lid"
           >{{league.name}}</div>
@@ -31,11 +31,11 @@
 
       <div v-show="currentTable === 'teamA'">
         <div class="text-center mt-2 f4">球队名称</div>
-        <div class="overflow-auto border-top" style="height: 200px;">
+        <div class="overflow-auto " style="height: 300px;">
           <div
             v-for="team in teams"
             @click="onTeamASelect(team.tid)"
-            class="table-item border text-center py-3 mt-2"
+            class="table-item  text-center py-3 "
             :class="team.tid == current.teamA ? 'selected':''"
             :key="team.tid"
           >{{team.name}}</div>
@@ -48,11 +48,11 @@
 
       <div v-show="currentTable === 'teamB'">
         <div class="text-center mt-2 f4">球队名称</div>
-        <div class="overflow-auto border-top" style="height: 200px;">
+        <div class="overflow-auto " style="height: 300px;">
           <div
             v-for="team in teams"
             @click="onTeamBSelect(team.tid)"
-            class="table-item border text-center py-3 mt-2"
+            class="table-item  text-center py-3 "
             :class="team.tid == current.teamA ? 'another':(team.tid == current.teamB ? 'selected' : '')"
             :key="team.tid"
           >{{team.name}}</div>
@@ -65,11 +65,11 @@
 
       <div v-show="currentTable === 'rule'">
         <div class="text-center mt-2 f4">赛制</div>
-        <div class="overflow-auto border-top" style="height: 200px;">
+        <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="rule in rules"
             @click="onRuleSelect(rule.rid)"
-            class="table-item border text-center py-3 mt-2"
+            class="table-item  text-center py-3 "
             :class="rule.rid == current.rule ? 'selected':''"
             :key="rule.rid"
           >{{rule.rule}}</div>
@@ -81,7 +81,12 @@
       </div>
 
       <div v-show="currentTable === 'predict'" class="position-relative">
-        <div v-show="isLoading" ref="loading" class="mx-auto my-8 bg-white" style="width: 200px; height: 200px;"></div>
+        <div
+          v-show="isLoading"
+          ref="loading"
+          class="mx-auto my-8 bg-white"
+          style="width: 200px; height: 200px;"
+        ></div>
         <div v-if="!isLoading" class="d-flex m-6 flex-items-center">
           <div class="col-3 text-center">
             <img v-bind:src="result.teamA.avatar" class="img circle mr-2">
@@ -113,6 +118,17 @@ import lottie from "lottie-web";
 
 export default {
   async asyncData({ $axios }) {
+    try {
+      let user = await $axios.$post("/api/auth/signin", {
+        username: "igulu",
+        password: "password"
+      });
+
+      console.log(user);
+    } catch (e) {
+      console.log(e);
+    }
+
     let leagues = [
       {
         lid: 1,
@@ -248,17 +264,15 @@ export default {
     async _getTeamData() {
       //获取team
       try {
-
-      } catch(e) {
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
     },
     async _getRuleData() {
       //获取rule
       try {
-
-      } catch(e) {
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
     },
     _changeCurrentTable(step) {
@@ -268,10 +282,10 @@ export default {
       let newTable = tableStatesENUM[index + step];
       if (oldTable === "league" && newTable === "teamA") {
         // 如果是team就要重新拉一次数据,因为league可能会不一样
-        this._getTeamData()
+        this._getTeamData();
       } else if (oldTable === "teamB" && newTable === "rule") {
         // 如果是rule也要重新拉一次数据，因为league可能会不一样
-        this._getRuleData()
+        this._getRuleData();
       } else {
       }
       this.currentTable = newTable;

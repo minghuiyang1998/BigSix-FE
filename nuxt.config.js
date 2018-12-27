@@ -72,5 +72,8 @@ module.exports = {
     babel: {
       "plugins": ["@babel/plugin-proposal-export-default-from"]
     }
+  },
+  proxy: {
+    '/api/':'http://47.101.175.152:8765'
   }
 }

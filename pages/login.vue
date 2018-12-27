@@ -3,8 +3,14 @@
     class="d-flex flex-justify-center flex-items-center"
     style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;"
   >
-    <div class="position-relative col-md-5 col-lg-5 rounded-1 text-gray bg-white pt-6 px-4 border box-shadow-large">
-      <div ref="lavContainer" class="position-absolute left-0 right-0 mx-auto " style="width: 200px; height: 200px; top:-100px;"></div>
+    <div
+      class="position-relative col-md-5 col-lg-5 rounded-1 text-gray bg-white pt-6 px-4 border box-shadow-large"
+    >
+      <div
+        ref="lavContainer"
+        class="position-absolute left-0 right-0 mx-auto"
+        style="width: 200px; height: 200px; top:-100px;"
+      ></div>
       <el-form :model="user" class="mt-6">
         <el-form-item prop="name" required="true">
           <label class="form-label f5">username</label>
@@ -16,7 +22,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="success btn-block" @click="submitForm()">login</el-button>
-          <div class="mt-2  ">New to BigSix? <nuxt-link to="/regist"> Create an account.</nuxt-link></div>
+          <div class="mt-2">New to BigSix?
+            <nuxt-link to="/regist">Create an account.</nuxt-link>
+          </div>
         </el-form-item>
       </el-form>
     </div>
@@ -26,6 +34,9 @@
 <script>
 import lottie from "lottie-web";
 export default {
+  async asyncData({ $axios }) {
+    
+  },
   data() {
     return {
       user: {
@@ -51,9 +62,9 @@ export default {
         return
       } else {
         //post here
-          // const user = await this.$axios.$post('')
 
       }
+      
     }
   }
 };
