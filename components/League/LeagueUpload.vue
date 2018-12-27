@@ -4,7 +4,10 @@
       <el-upload
         ref="upload"
         drag
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="/api/league/match"
+        accept=".csv"
+        name="file"
+        :data="{ league_id: leagueId }"
         :auto-upload="false"
         @on-success="onSuccess"
         @on-error="onError"
@@ -27,6 +30,7 @@ export default {
   data() {
     return {
       visible: false,
+      leagueId: null
     }
   },
 
@@ -36,7 +40,7 @@ export default {
     },
 
     handleUpload() {
-      console.log(this.$refs.upload.submit())
+      this.$refs.upload.submit()
     },
 
     onSuccess() {
@@ -53,6 +57,7 @@ export default {
 
     open(leagueId) {
       this.visible = true;
+      this.leagueId = leagueId
       // @todo
     }
   }

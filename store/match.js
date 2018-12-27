@@ -15,15 +15,15 @@ export const mutations = {
 
   SET_LEAGUE_MATCHES_LOADING(state, val) {
     state.isLeagueMatchesLoading = val
-  }
+  },
 
   SET_TEAM_MATCHES(state, matches) {
     state.teamMatches = matches
-  }
+  },
 
   SET_TEAM_MATCHES_LOADING(state, val) {
     state.isTeamMatchesLoading = val
-  }
+  },
 }
 
 export const actions = {
