@@ -10,8 +10,8 @@
           <p><b>联赛名称: </b>{{league.name}}</p>
           <p>
             <b>联赛类型:</b>
-            <span v-if="league.leagueType===1"><font-awesome-icon icon="futbol" /> <span>足球</span></span>
-            <span v-if="league.leagueType===2"><font-awesome-icon icon="basketball-ball" /><span>篮球</span></span>
+            <span v-if="league.leagueType===1"><no-ssr><font-awesome-icon icon="futbol" /></no-ssr> <span>足球</span></span>
+            <span v-if="league.leagueType===2"><no-ssr><font-awesome-icon icon="basketball-ball" /></no-ssr> <span>篮球</span></span>
           </p>
           <p><b>联赛简介: </b>{{league.introduction}}</p>
           <!-- <p>创建时间</p> -->

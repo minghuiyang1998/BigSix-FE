@@ -39,7 +39,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/clampy',
     { src: '@/plugins/lottie', ssr: false },
-    { src: '@/plugins/fontawesome', ssr: false }
+    '@/plugins/fontawesome'
   ],
 
   /*
