@@ -18,7 +18,7 @@
           <div
             v-for="league in leagues"
             @click="onLeagueSelect(league.id)"
-            class="table-item  text-center py-3"
+            class="table-item text-center py-3"
             :class="league.id == current.league ? 'selected':''"
             :key="league.id"
           >{{league.name}}</div>
@@ -31,11 +31,11 @@
 
       <div v-show="currentTable === 'teamA'">
         <div class="text-center my-4 f4">球队名称</div>
-        <div class="overflow-auto " style="height: 300px;">
+        <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="team in teams"
             @click="onTeamASelect(team.id)"
-            class="table-item  text-center py-3 "
+            class="table-item text-center py-3"
             :class="team.id == current.teamA ? 'selected':''"
             :key="team.id"
           >{{team.name}}</div>
@@ -48,11 +48,11 @@
 
       <div v-show="currentTable === 'teamB'">
         <div class="text-center my-4 f4">球队名称</div>
-        <div class="overflow-auto " style="height: 300px;">
+        <div class="overflow-auto" style="height: 300px;">
           <div
             v-for="team in teams"
             @click="onTeamBSelect(team.id)"
-            class="table-item  text-center py-3 "
+            class="table-item text-center py-3"
             :class="team.id == current.teamA ? 'another':(team.id == current.teamB ? 'selected' : '')"
             :key="team.id"
           >{{team.name}}</div>
@@ -69,7 +69,7 @@
           <div
             v-for="rule in rules"
             @click="onRuleSelect(rule.rid)"
-            class="table-item  text-center py-3 "
+            class="table-item text-center py-3"
             :class="rule.rid == current.rule ? 'selected':''"
             :key="rule.rid"
           >{{rule.rule}}</div>
@@ -93,8 +93,18 @@
             <div class="h1">{{result.teamA.name}}</div>
           </div>
           <div class="col-6 mx-6">
-            <el-progress :percentage="result.winRate" color="#57B08F" :stroke-width="8" class="my-2"></el-progress>
-            <el-progress :percentage="result.loseRate" color="#8e71c7" :stroke-width="8" class="my-2" ></el-progress>
+            <el-progress
+              :percentage="result.winRate"
+              color="#57B08F"
+              :stroke-width="8"
+              class="my-2"
+            ></el-progress>
+            <el-progress
+              :percentage="result.loseRate"
+              color="#8e71c7"
+              :stroke-width="8"
+              class="my-2"
+            ></el-progress>
             <el-progress :percentage="result.rate" color="#ec6a6a" :stroke-width="8" class="my-2"></el-progress>
           </div>
           <div class="col-3 text-center">
@@ -112,6 +122,12 @@ const tableStatesENUM = ["league", "teamA", "teamB", "rule", "predict"];
 import lottie from "lottie-web";
 
 export default {
+  fetch({ store, redirect }) {
+    if (!store.state.isLogin) {
+      console.log("not login!");
+      return redirect("/login");
+    }
+  },
   async asyncData({ $axios }) {
     try {
       let user = await $axios.$post("/api/auth/signin", {
@@ -124,16 +140,16 @@ export default {
       console.log(e);
     }
 
-  let leagues
-  try {
-    leagues = await $axios.$get("/api/league/league")
-    console.log(leagues)
-  } catch(e) {
-    console.log(e)
-  }
+    let leagues;
+    try {
+      leagues = await $axios.$get("/api/league/league");
+      console.log(leagues);
+    } catch (e) {
+      console.log(e);
+    }
 
     return {
-      leagues: leagues,
+      leagues: leagues
     };
   },
   data() {
@@ -200,11 +216,13 @@ export default {
     async _getTeamData() {
       //获取team
       try {
-         let res = await this.$axios.$get(`/api/league/team?league_id=${this.current.league}`)
-         console.log('111',res)
-         this.teams = res
-      } catch(e) {
-        console.log(e)
+        let res = await this.$axios.$get(
+          `/api/league/team?league_id=${this.current.league}`
+        );
+        console.log("111", res);
+        this.teams = res;
+      } catch (e) {
+        console.log(e);
       }
     },
     async _getRuleData() {

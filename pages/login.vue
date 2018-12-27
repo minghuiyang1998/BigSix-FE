@@ -23,7 +23,7 @@
         <el-form-item>
           <el-button type="primary btn-block" @click="submitForm()">login</el-button>
           <div class="mt-2">New to BigSix?
-            <nuxt-link to="/regist">Create an account.</nuxt-link>
+            <nuxt-link to="/register">Create an account.</nuxt-link>
           </div>
         </el-form-item>
       </el-form>
@@ -34,7 +34,9 @@
 <script>
 import lottie from "lottie-web";
 export default {
-  async asyncData({ $axios }) {},
+  async asyncData({ $axios }) {
+    
+  },
   data() {
     return {
       user: {
