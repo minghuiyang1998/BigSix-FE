@@ -7,7 +7,13 @@
       @addLeague="openFormDialog"
       v-loading="leagueLoading"
     />
-    <LeagueDashboard class="flex-auto" :league="current" :teamLoading="teamLoading" />
+    <LeagueDashboard
+      class="flex-auto"
+      :league="current"
+      :teams="teams"
+      :matches="leagueMatches"
+      :teamLoading="teamLoading"
+      :matchesLoading="isLeagueMatchesLoading" />
     <!-- <TeamList class="flex-auto" /> -->
     <el-dialog title="新建联赛" :visible.sync="dialogVisible" center :close-on-click-modal="false">
       <el-steps :active="step" simple finish-status="success">
@@ -73,7 +79,10 @@ export default {
     ...mapState('team', {
       teamLoading: 'isFetching',
       teamCreating: 'isCreating',
-    })
+      teams: 'teams'
+    }),
+
+    ...mapState('match', ['isLeagueMatchesLoading', 'leagueMatches'])
   },
 
   methods: {

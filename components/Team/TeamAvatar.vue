@@ -13,9 +13,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$size: 24px;
+$size: 28px;
 
 .team-avatar {
+  display: flex;
+  align-items: center;
   img {
     max-width: $size;
     max-height: $size;

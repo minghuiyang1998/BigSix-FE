@@ -23,9 +23,9 @@
     </div>
     <div class="section" v-loading="teamLoading">
       <h4>队伍列表</h4>
-      <TeamList />
+      <TeamList :teams="teams" />
     </div>
-    <div class="section">
+    <div class="section" v-loading="matchesLoading">
       <h4>近期比赛</h4>
     </div>
 
@@ -42,6 +42,8 @@ export default {
   props: {
     league: Object,
     teamLoading: Boolean,
+    matchesLoading: Boolean,
+    teams: Array
   },
 
   components: {
