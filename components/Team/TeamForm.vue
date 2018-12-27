@@ -23,7 +23,9 @@
             name="smfile"
             :show-file-list="false"
             accept="image/*"
+            :before-upload="beforeUpload(scope.row.key)"
             :on-success="handleAvatarSuccess(scope.row.key)"
+            :on-error="handleError(scope.row.key)"
           >
             <el-button slot="trigger" size="mini" type="primary">上传队标</el-button>
             <el-button
@@ -67,11 +69,30 @@ export default {
 
   methods: {
     handleAvatarSuccess(key) {
-      const team = this.findTeamByKey(key)
       return (res) => {
-        console.log(1)
+        const team = this.findTeamByKey(key)
         if (team) {
           team.avatarUrl = res.data.url
+          team.isLoading = false
+        }
+      }
+    },
+
+    handleError(key) {
+      return () => {
+        const team = this.findTeamByKey(key);
+        this.$message.error("上传失败")
+        if (team) {
+          team.isLoading = false;
+        }
+      }
+    },
+
+    beforeUpload(key) {
+      return () => {
+        const team = this.findTeamByKey(key);
+        if (team) {
+          team.isLoading = true;
         }
       }
     },
@@ -86,12 +107,27 @@ export default {
         leagueId: this.leagueId,
         name: '',
         avatarUrl: '',
-        introduction: ''
+        introduction: '',
+        isLoading: false,
       })
     },
 
     handleDelete(key) {
       this.teams = this.teams.filter(team => team.key !== key)
+    },
+
+    formData() {
+      return this.teams;
+    },
+
+    isValid() {
+      for(let i = 0; i < this.teams.length; i++) {
+        const team = this.teams[i];
+        if (!team.name || !team.avatarUrl || !team.introduction) {
+          return false;
+        }
+      }
+      return true;
     }
   }
 }

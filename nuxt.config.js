@@ -54,12 +54,13 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    proxy: true
+    proxy: true,
+    credentials: true,
   },
 
   proxy: {
     '/api/':'http://47.101.175.152:8765',
-    '/upload': 'https://sm.ms/api/upload'
+    '/upload': 'https://sm.ms/api',
   },
 
   /*

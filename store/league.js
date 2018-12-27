@@ -24,7 +24,7 @@ export const mutations = {
   },
 
   ADD_LEAGUE(state, league) {
-    state.league.push(league)
+    state.leagues.push(league)
   },
 
   SET_IS_FETCHING(state, val) {
@@ -61,23 +61,4 @@ export const actions = {
       commit("SET_IS_FETCHING", false)
     }
   },
-
-  async createLeague({ commit }, { name, introduction, avatarUrl, leagueType }) {
-    try {
-      commit("SET_IS_CREATING", true)
-      const league = await this.$axios.$post('/api/league/league', {
-        name,
-        introduction,
-        avatarUrl,
-        leagueType: Number(leagueType),
-      });
-      commit('ADD_LEAGUE', league);
-    } catch(err) {
-      Message.error("无法创建联赛列表");
-      console.error(err)
-      commit('ADD_LEAGUE', []);
-    } finally {
-      commit("SET_IS_CREATING", false)
-    }
-  }
 }

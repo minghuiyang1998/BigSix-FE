@@ -3,13 +3,15 @@
     <el-form-item label="联赛名称" :label-width="formLabelWidth">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="联赛 Logo" :label-width="formLabelWidth">
+    <el-form-item label="联赛 Logo" :label-width="formLabelWidth" v-loading="uploading">
       <el-upload
         class="avatar-uploader"
         action="/upload"
         name="smfile"
         :show-file-list="false"
         accept="image/*"
+        :before-upload="beforeUpload"
+        :on-error="handleError"
         :on-success="handleAvatarSuccess"
       >
         <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
@@ -17,7 +19,7 @@
       </el-upload>
     </el-form-item>
     <el-form-item label="联赛类型" :label-width="formLabelWidth">
-      <el-select v-model="form.type" placeholder="请选择联赛类型">
+      <el-select v-model="form.leagueType" placeholder="请选择联赛类型">
         <el-option label="足球" value="1"></el-option>
         <el-option label="篮球" value="2"></el-option>
       </el-select>
@@ -35,16 +37,36 @@ export default {
       formLabelWidth: '80px',
       form: {
         name: '',
-        type: '1',
+        leagueType: '1',
         avatarUrl: '',
         introduction: ''
-      }
+      },
+      uploading: false
     }
   },
 
   methods: {
     handleAvatarSuccess(res, file) {
       this.form.avatarUrl = res.data.url;
+      this.uploading = false;
+    },
+
+    handleError() {
+      this.$message.error("上传失败")
+      this.uploading = false;
+    },
+
+    formData() {
+      return this.form;
+    },
+
+    isValid() {
+      const form = this.form;
+      return !!(form.name && form.leagueType && form.avatarUrl && form.introduction)
+    },
+
+    beforeUpload() {
+      this.uploading = true;
     },
   }
 }

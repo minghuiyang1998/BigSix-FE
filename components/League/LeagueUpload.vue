@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       visible: false,
-      leagueId: null
+      leagueId: null,
     }
   },
 

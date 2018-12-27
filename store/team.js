@@ -35,13 +35,6 @@ export const actions = {
   },
 
   async createTeams({ commit }, teams = []) {
-    try {
-      commit('SET_IS_CREATING', true)
-      const res = await this.$axios.$post('/api/league/teams', teams)
-    } catch (err) {
-      Message.error("创建队伍列表失败！")
-    } finally {
-      commit('SET_IS_CREATING', false)
-    }
+    await this.$axios.$post('/api/league/teams', teams)
   }
 }
