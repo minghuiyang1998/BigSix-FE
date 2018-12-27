@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <h3>队伍列表</h3>
-      </div>
-      <team-card></team-card>
-    </el-card>
+    <team-card></team-card>
   </div>
 </template>
 
