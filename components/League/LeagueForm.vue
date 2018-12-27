@@ -6,13 +6,13 @@
     <el-form-item label="联赛 Logo" :label-width="formLabelWidth">
       <el-upload
         class="avatar-uploader"
-        action="https://sm.ms/api/upload"
+        action="/upload"
+        name="smfile"
         :show-file-list="false"
         accept="image/*"
         :on-success="handleAvatarSuccess"
-        :http-request="handleUpload"
       >
-        <img v-if="form.avatar" :src="form.avatar" class="avatar">
+        <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
@@ -36,7 +36,7 @@ export default {
       form: {
         name: '',
         type: '1',
-        avatar: '',
+        avatarUrl: '',
         introduction: ''
       }
     }
@@ -44,12 +44,8 @@ export default {
 
   methods: {
     handleAvatarSuccess(res, file) {
-      this.form.avatar = URL.createObjectURL(file.raw);
+      this.form.avatarUrl = res.data.url;
     },
-
-    handleUpload(params) {
-      console.log(params)
-    }
   }
 }
 </script>
