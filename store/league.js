@@ -66,6 +66,8 @@ export const actions = {
       commit("SET_LEAGUES", res)
     } catch(err) {
       Message.error("无法获取联赛列表");
+      console.error(err)
+      commit("SET_LEAGUES", [])
     } finally {
       commit("SET_IS_FETCHING", false)
     }
@@ -83,6 +85,8 @@ export const actions = {
       commit('ADD_LEAGUE', league);
     } catch(err) {
       Message.error("无法创建联赛列表");
+      console.error(err)
+      commit('ADD_LEAGUE', []);
     } finally {
       commit("SET_IS_CREATING", false)
     }
