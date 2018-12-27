@@ -8,6 +8,14 @@ export const state = () => ({
 })
 
 export const actions = {
+  async getUser({dispatch}){
+    try {
+      let data = 
+      dispatch('setUser', data)
+    } catch(e) {
+      console.log(e)
+    }
+  },
   setUser({ commit }, user) {
     console.log('setUser!')
     commit('setUserInfo', user)
