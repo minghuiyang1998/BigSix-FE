@@ -34,8 +34,10 @@
 <script>
 import lottie from "lottie-web";
 export default {
-  async asyncData({ $axios }) {
-
+  fetch ({ store, redirect }) {
+    if (store.state.isLogin) {
+      return redirect('/')
+    }
   },
   data() {
     return {
