@@ -27,6 +27,7 @@
     </div>
     <div class="section" v-loading="matchesLoading">
       <h4>近期比赛</h4>
+      <MatchList :matches="matches" />
     </div>
 
     <LeagueUpload ref="upload" />
@@ -35,6 +36,7 @@
 
 <script>
 import { TeamList } from '../Team';
+import { MatchList } from '../Match';
 import LeagueAvatar from './LeagueAvatar';
 import LeagueUpload from './LeagueUpload';
 
@@ -43,11 +45,13 @@ export default {
     league: Object,
     teamLoading: Boolean,
     matchesLoading: Boolean,
-    teams: Array
+    teams: Array,
+    matches: Array,
   },
 
   components: {
     TeamList,
+    MatchList,
     LeagueAvatar,
     LeagueUpload
   },

@@ -40,6 +40,7 @@ export const actions = {
   async selectLeagueById({ commit, dispatch }, id) {
     commit('UPDATE_SELECTED_ID', id);
     await dispatch('team/getTeamsByLeagues', id, { root: true })
+    await dispatch('match/getLeagueMatches', id, { root: true })
   },
 
   async getLeagues({ commit, state, dispatch }) {
