@@ -16,6 +16,12 @@ export const state = () => ({
   selectedId: 1
 })
 
+export const getters = {
+  current(state) {
+    return state.leagues.find(l => l.id === state.selectedId)
+  }
+}
+
 export const mutations = {
   UPDATE_SELECTED_ID(state, id) {
     state.selectedId = id

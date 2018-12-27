@@ -6,7 +6,8 @@
       @selected="selectLeagueById"
       @addLeague="openFormDialog"
     />
-    <TeamList class="flex-auto" />
+    <LeagueDashboard class="flex-auto" :league="current" />
+    <!-- <TeamList class="flex-auto" /> -->
     <el-dialog title="新建联赛" :visible.sync="dialogVisible" center>
       <el-steps :active="step" simple>
         <el-step title="创建联赛" icon="el-icon-edit"></el-step>
@@ -33,13 +34,14 @@
 </template>
 
 <script>
-import { LeagueList, LeagueForm } from '@/components/League';
+import { LeagueList, LeagueForm, LeagueDashboard } from '@/components/League';
 import { TeamList, TeamForm } from '@/components/Team';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
     LeagueList,
+    LeagueDashboard,
     TeamList,
     LeagueForm,
     TeamForm,
@@ -56,7 +58,8 @@ export default {
   },
 
   computed: {
-    ...mapState('league', ['leagues', 'selectedId'])
+    ...mapState('league', ['leagues', 'selectedId']),
+    ...mapGetters('league', ['current'])
   },
 
   methods: {

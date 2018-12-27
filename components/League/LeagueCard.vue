@@ -2,14 +2,12 @@
   <div
     class="league-card box-shadow-medium"
     :class="{ 'league-card__selected': isSelected, 'box-shadow-large': isSelected }">
-    <div class="league-avatar">
-      <div class="league-avatar__image" :style="`background-image: url(${avatar})`"></div>
-    </div>
+    <LeagueAvatar :avatar="avatar" />
     <div class="league-info">
       <div class="league-info__name">{{name}}</div>
       <div v-clampy="2" class="league-info__intro">{{intro}}</div>
     </div>
-    <el-dropdown trigger="click" @command="handleCommand">
+    <!-- <el-dropdown trigger="click" @command="handleCommand">
       <div class="league-dropdown-button">
         <font-awesome-icon icon="ellipsis-v" fixed-width :mask="['far', 'circle']" />
       </div>
@@ -17,12 +15,12 @@
         <el-dropdown-item command="upload">上传数据</el-dropdown-item>
         <el-dropdown-item command="detail">查看详情</el-dropdown-item>
       </el-dropdown-menu>
-    </el-dropdown>
-
+    </el-dropdown> -->
   </div>
 </template>
 
 <script>
+import LeagueAvatar from './LeagueAvatar';
 export default {
   props: {
     id: Number,
@@ -30,6 +28,10 @@ export default {
     intro: String,
     avatar: String,
     isSelected: Boolean,
+  },
+
+  components: {
+    LeagueAvatar
   },
 
   methods: {
@@ -68,20 +70,6 @@ export default {
     .league-dropdown-button {
       user-select: none;
     }
-  }
-}
-
-.league-avatar {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  padding-right: 10px;
-  flex-shrink: 0;
-  &__image {
-    width: 100%;
-    background-position: center center;
-    background-size: contain;
-    background-repeat: no-repeat;
   }
 }
 
