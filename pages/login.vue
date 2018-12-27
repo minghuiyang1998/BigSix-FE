@@ -34,11 +34,6 @@
 <script>
 import lottie from "lottie-web";
 export default {
-  fetch ({ store, redirect }) {
-    if (store.state.isLogin) {
-      return redirect('/')
-    }
-  },
   data() {
     return {
       user: {
