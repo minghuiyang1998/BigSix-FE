@@ -4,5 +4,7 @@ export default function({ store, route, error, redirect }) {
     if (route.path !== '/' && route.path !== '/login' && route.path !== '/regist') {
       redirect("/login");
     }
+  } else if (route.path === '/login' || route.path === '/regist') {
+    redirect('/')
   }
 }
