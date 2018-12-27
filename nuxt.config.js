@@ -58,7 +58,8 @@ module.exports = {
   },
 
   proxy: {
-    '/api/':'http://47.101.175.152:8765'
+    '/api/':'http://47.101.175.152:8765',
+    '/upload': 'https://sm.ms/api/upload'
   },
 
   /*

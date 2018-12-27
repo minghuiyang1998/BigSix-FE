@@ -16,7 +16,7 @@
       </el-steps>
       <div class="mt-4 mb-4">
         <LeagueForm v-if="step===1" ref="leagueForm" />
-        <TeamForm v-if="step===2" ref="teamForm"/>
+        <TeamForm v-if="step===2" ref="teamForm":leagueId="league.id" />
         <div v-show="step===3" class="result">
           <div>
             <el-progress type="circle" :percentage="100" status="success"></el-progress>
@@ -54,6 +54,10 @@ export default {
     return {
       dialogVisible: false,
       step: 0,
+
+      league: {
+        id: 1
+      },
     }
   },
 
