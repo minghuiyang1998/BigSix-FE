@@ -1,16 +1,12 @@
 export const state = () => ({
-  userInfo: {
-    username: "igulu",
-    email: 'igulu@example.com',
-    avatar: null
-  },
+  userInfo: null,
   isLogin: false
 })
 
 export const actions = {
   async getUser({dispatch}){
     try {
-      let data = 
+      let data =
       dispatch('setUser', data)
     } catch(e) {
       console.log(e)

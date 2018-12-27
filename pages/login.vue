@@ -13,15 +13,15 @@
       ></div>
       <el-form :model="user" class="mt-6">
         <el-form-item prop="username" required="true">
-          <label class="form-label f5">username</label>
+          <label class="form-label f5">用户名</label>
           <el-input type="username" v-model="user.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="password" required="true">
-          <label class="form-label f5">password</label>
+          <label class="form-label f5">密码</label>
           <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="success btn-block" @click="submitForm()">login</el-button>
+          <el-button type="primary btn-block" @click="submitForm()">login</el-button>
           <div class="mt-2">New to BigSix?
             <nuxt-link to="/regist">Create an account.</nuxt-link>
           </div>
