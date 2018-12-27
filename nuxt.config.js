@@ -54,6 +54,11 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    proxy: true
+  },
+
+  proxy: {
+    '/api/':'http://47.101.175.152:8765'
   },
 
   /*
@@ -72,8 +77,5 @@ module.exports = {
     babel: {
       "plugins": ["@babel/plugin-proposal-export-default-from"]
     }
-  },
-  proxy: {
-    '/api/':'http://47.101.175.152'
   }
 }

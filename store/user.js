@@ -4,5 +4,5 @@ export const state = () => ({
     email: 'igulu@example.com',
     avatar: null
   },
-  isLogin: true
+  isLogin: false
 })

@@ -12,13 +12,13 @@
         style="width: 200px; height: 200px; top:-100px;"
       ></div>
       <el-form :model="user" class="mt-6">
-        <el-form-item prop="name" required="true">
+        <el-form-item prop="username" required="true">
           <label class="form-label f5">username</label>
-          <el-input type="username" v-model="user.name" autocomplete="off"></el-input>
+          <el-input type="username" v-model="user.username" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="pass" required="true">
+        <el-form-item prop="password" required="true">
           <label class="form-label f5">password</label>
-          <el-input type="password" v-model="user.pass" autocomplete="off"></el-input>
+          <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="success btn-block" @click="submitForm()">login</el-button>
@@ -35,13 +35,13 @@
 import lottie from "lottie-web";
 export default {
   async asyncData({ $axios }) {
-    
+
   },
   data() {
     return {
       user: {
-        name: "",
-        pass: ""
+        username: "",
+        password: ""
       },
       anim: {}
     };
@@ -56,15 +56,14 @@ export default {
     });
   },
   methods: {
-    submitForm() {
-      if (!this.user.name | !this.user.pass) {
+    async submitForm() {
+      if (!this.user.username || !this.user.password) {
         this.$message('必须填完噢：）～');
         return
       } else {
-        //post here
-
+        const responese = await this.$axios.$post('/api/auth/signin', this.user)
+        console.log(responese)
       }
-      
     }
   }
 };
