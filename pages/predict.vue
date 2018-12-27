@@ -1,7 +1,7 @@
 <template>
   <section
     class="d-flex flex-justify-center flex-items-center"
-    style="background: linear-gradient(-60deg,#fff 40%,  #57B08F 40%) ; height: 100vh;"
+    style="background: linear-gradient(-60deg,#fff 40%,  #3B3F47 40%) ; height: 100vh;"
   >
     <div class="col-md-8 col-lg-8 text-gray bg-white py-4 rounded-2 border box-shadow-large">
       <el-steps :active="step" finish-status="success" align-center>
@@ -201,7 +201,7 @@ export default {
           this.hostWinRate = parseInt(res.hostWinRate * 100)
           this.drawGameRate = parseInt(res.drawGameRate * 100)
           this.guestWinRate = parseInt(res.guestWinRate * 100)
-          
+
           this.isLoading = false
         } catch (err) {
             this.$message(err);

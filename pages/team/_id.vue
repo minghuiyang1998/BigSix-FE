@@ -2,7 +2,7 @@
   <div class="d-flex">
     <aside
       class="position-relative col-md-4 col-lg-3 hide-md hide-sm"
-      style="background-color: #58AF9B"
+      style="background-color: #3B3F47"
     >
       <img
         v-bind:src="team.avatarUrl"
@@ -186,4 +186,3 @@ export default {
 
 <style>
 </style>
- 
