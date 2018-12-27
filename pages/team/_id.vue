@@ -71,6 +71,12 @@ import echarts from "echarts";
 require("../../assets/javascript/customed.js");
 
 export default {
+  fetch ({ store, redirect }) {
+    if (!store.state.isLogin) {
+      console.log('not login!')
+      return redirect('/login')
+    }
+  },
   async asyncData({ params, $axios }) {
     let team;
     try {
@@ -100,13 +106,6 @@ export default {
     } catch (e) {
       console.log(e);
     }
-
-    // let chartData = {
-    //   xData: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-    //   yData_win: [820, 932, 901, 934, 1290, 1330, 1320],
-    //   yData_lose: [820, 932, 901, 934, 1290, 1330, 1320]
-    // };
-
     return {
       history: history,
       chartData: { xData, yData_lose, yData_win },

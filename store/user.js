@@ -10,7 +10,7 @@ export const state = () => ({
 export const actions = {
   async getUser({dispatch}){
     try {
-      let data = 
+      let data = await $axios.$get(`/api/auth/user`);
       dispatch('setUser', data)
     } catch(e) {
       console.log(e)
