@@ -8,6 +8,7 @@
       v-loading="leagueLoading"
     />
     <LeagueDashboard
+      v-if="current"
       class="flex-auto"
       :league="current"
       :teams="teams"

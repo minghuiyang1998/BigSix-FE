@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="上传数据" center :visible.sync="visible" width="600px">
+  <el-dialog title="上传数据" center :visible.sync="visible" width="600px" :close-on-click-modal="false">
     <div class="upload">
       <el-upload
         ref="upload"
@@ -9,8 +9,9 @@
         name="file"
         :data="{ league_id: leagueId }"
         :auto-upload="false"
-        @on-success="onSuccess"
-        @on-error="onError"
+        :before-upload="beforeUpload"
+        :on-success="onSuccess"
+        :on-error="onError"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -20,7 +21,7 @@
 
     <div slot="footer">
       <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="handleUpload">上传</el-button>
+      <el-button type="primary" @click="handleUpload" v-loading="loading">上传</el-button>
     </div>
   </el-dialog>
 </template>
@@ -31,6 +32,7 @@ export default {
     return {
       visible: false,
       leagueId: null,
+      loading: false,
     }
   },
 
@@ -43,22 +45,28 @@ export default {
       this.$refs.upload.submit()
     },
 
+    beforeUpload() {
+      this.loading = true
+    },
+
     onSuccess() {
+      this.loading = false
       this.$message({
         message: '上传成功',
         type: 'success'
       });
+      this.$store.dispatch("match/getLeagueMatches", this.leagueId)
       this.handleClose()
     },
 
     onError() {
+      this.loading = false
       this.$message.error('上传失败')
     },
 
     open(leagueId) {
       this.visible = true;
       this.leagueId = leagueId
-      // @todo
     }
   }
 }

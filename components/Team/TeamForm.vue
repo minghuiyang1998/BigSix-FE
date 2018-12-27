@@ -27,7 +27,7 @@
             :on-success="handleAvatarSuccess(scope.row.key)"
             :on-error="handleError(scope.row.key)"
           >
-            <el-button slot="trigger" size="mini" type="primary">上传队标</el-button>
+            <el-button slot="trigger" size="mini" type="primary" v-loading="scope.row.loading">上传队标</el-button>
             <el-button
               size="mini"
               type="danger"

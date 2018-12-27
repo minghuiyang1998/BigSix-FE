@@ -12,7 +12,7 @@
   padding: 10px 20px;
   display: flex;
   border-radius: 5px;
-  max-width: 400px;
+  width: 400px;
   height: 120px;
   border: 1px dashed #ddd;
   align-items: center;
