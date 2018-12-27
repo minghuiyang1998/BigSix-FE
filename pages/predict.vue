@@ -8,78 +8,93 @@
         <el-step title="选择联赛" description></el-step>
         <el-step title="选择参赛队" description></el-step>
         <el-step title="选择参赛队" description></el-step>
+        <el-step title="选择赛制" description></el-step>
         <el-step title="预测" description></el-step>
       </el-steps>
-      <div v-if="currentTable === 'league'" key="0">
+
+      <div v-if="currentTable === 'league'">
         <el-table
-          ref="singleTable"
-          :data="leagueData"
-          highlight-current-row
+          ref="league"
+          :data="leagueData.leagues"
           @row-click="onLeagueSelect"
+          highlight-current-row
           style="width: 100%"
         >
-          <el-table-column align="center" property="name" label="联赛名称"></el-table-column>
+          <el-table-column align="center" property="name" label="联赛名称" row-key="lid"></el-table-column>
         </el-table>
         <div class="d-flex mt-4 flex-justify-between flex-items-center">
           <el-button disabled>上一步</el-button>
-          <el-button @click="onNextButtonClick()" >下一步</el-button>
+          <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
-      <div v-else-if="currentTable === 'teamA'" key="1">
+
+      <div v-else-if="currentTable === 'teamA'">
         <el-table
-          ref="singleTable"
-          :data="teamData"
-          highlight-current-row
+          ref="teamA"
+          :data="teamData.teams"
           @row-click="onTeamASelect"
+          highlight-current-row
           style="width: 100%"
         >
-          <el-table-column align="center" property="name" label="球队名称"></el-table-column>
+          <el-table-column align="center" property="name" label="球队名称" row-key="tid"></el-table-column>
         </el-table>
         <div class="d-flex mt-4 flex-justify-between flex-items-center">
           <el-button @click="onBackButtonClick()">上一步</el-button>
           <el-button @click="onNextButtonClick()">下一步</el-button>
         </div>
       </div>
-      <div v-else-if="currentTable === 'teamB'" key="2">
+
+      <div v-else-if="currentTable === 'teamB'">
         <el-table
-          ref="singleTable"
-          :data="teamData"
+          ref="teamB"
+          :data="teamData.teams"
           highlight-current-row
           @row-click="onTeamBSelect"
           style="width: 100%"
         >
-          <el-table-column align="center" property="name" label="球队名称"></el-table-column>
+          <el-table-column align="center" property="name" label="球队名称" row-key="tid"></el-table-column>
+        </el-table>
+        <div class="d-flex mt-4 flex-justify-between flex-items-center">
+          <el-button @click="onBackButtonClick()">上一步</el-button>
+          <el-button @click="onNextButtonClick()">下一步</el-button>
+        </div>
+      </div>
+
+      <div v-else-if="currentTable === 'rule'">
+        <el-table
+          ref="rule"
+          :data="ruleData.rules"
+          highlight-current-row
+          @row-click="onRuleSelect"
+          style="width: 100%"
+        >
+          <el-table-column align="center" property="rule" label="赛制" row-key="rid"></el-table-column>
         </el-table>
         <div class="d-flex mt-4 flex-justify-between flex-items-center">
           <el-button @click="onBackButtonClick()">上一步</el-button>
           <el-button @click="onPredictButtonClick()">开始预测</el-button>
         </div>
       </div>
+
       <div v-else-if="currentTable === 'predict'">
-        <div v-if="isLoading" style="width:200px;height:200px;" class="mx-auto">
-          <div ref="lavContainer" class="position-absolute left-0 right-0 mx-auto " style="width: 200px; height: 200px; top:-100px;"></div>
-        </div>
-        <div v-else class="d-flex m-6 flex-justify-between flex-items-center">
-          <div class="text-center">
-            <img
-              v-bind:src="result.teamA.avatar"
-              class="circle mr-2"
-              style="width: 40px;height: 40px;"
-            >
-            <div class="flex-auto h1">{{result.teamA.name}}</div>
+        <div v-if="isLoading" ref="lavContainer" style="width: 200px; height: 200px;"></div>
+        <div v-else class="d-flex m-6 flex-items-center">
+          <div class="col-3 text-center">
+            <img v-bind:src="result.teamA.avatar" class="img circle mr-2">
+            <div class="h1">{{result.teamA.name}}</div>
           </div>
-          <el-progress
-            :percentage="result.rate"
-            class="flex-auto mx-6"
-            :stroke-width="18"
-            color="#57B08F"
-          ></el-progress>
-          <div class="text-center">
-            <img
-              v-bind:src="result.teamB.avatar"
-              class="circle mr-2"
-              style="width:40px;height:40px;"
-            >
+          <div class="col-6 mx-6">
+            <el-progress :percentage="result.winRate" :stroke-width="8" class="my-2"></el-progress>
+            <el-progress
+              :percentage="result.loseRate"
+              color="#8e71c7"
+              :stroke-width="8"
+              class="my-2"
+            ></el-progress>
+            <el-progress :percentage="result.rate" color="#ec6a6a" :stroke-width="8" class="my-2"></el-progress>
+          </div>
+          <div class="col-3 text-center">
+            <img v-bind:src="result.teamB.avatar" class="img circle mr-2">
             <div class="flex-auto h1">{{result.teamB.name}}</div>
           </div>
         </div>
@@ -89,57 +104,133 @@
 </template>
 
 <script>
-const tableStatesENUM = ["league", "teamA", "teamB",'predict'];
+const tableStatesENUM = ["league", "teamA", "teamB", "rule", "predict"];
 import lottie from "lottie-web";
 
 export default {
   async asyncData({ $axios }) {
-     let leagueData = [
+    let leagueData = {
+      default: 1,
+      leagues: [
         {
+          lid: 1,
           name: "league-name"
         },
         {
+          lid: 2,
           name: "league-name"
         },
         {
+          lid: 3,
           name: "league-name"
         },
         {
+          lid: 4,
           name: "league-name"
-        }]
-
-    let teamData = [
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
-        {
-          name: "team-name_A"
-        },
+        }
       ]
+    };
+
+    let teamData = {
+      default: 1,
+      teams: [
+        {
+          tid: 1,
+          name: "team-name_A"
+        },
+        {
+          tid: 2,
+          name: "team-name_A"
+        },
+        {
+          tid: 3,
+          name: "team-name_A"
+        },
+        {
+          tid: 4,
+          name: "team-name_A"
+        }
+      ]
+    };
+
+    let ruleData = {
+      default: 1,
+      rules: [
+        {
+          rid: 1,
+          rule: "1 vs 1"
+        },
+        {
+          rid: 2,
+          rule: "1 vs 1"
+        },
+        {
+          rid: 3,
+          rule: "1 vs 1"
+        },
+        {
+          rid: 4,
+          rule: "1 vs 1"
+        },
+        {
+          rid: 5,
+          rule: "1 vs 1"
+        },
+        {
+          rid: 6,
+          rule: "1 vs 1"
+        }
+      ]
+    };
     return {
       leagueData: leagueData,
       teamData: teamData,
+      ruleData: ruleData,
+      [`current.league`]:leagueData.default,
+      [`current.teamA`]:teamData.default,
+      [`current.teamB`]:teamData.default,
+      [`current.rule`]:ruleData.default,
     };
   },
   data() {
     return {
       currentTable: "league",
       isLoading: true,
-      result: {},
-      leagueData: [],
-      teamData: [],
+      result: {
+        teamA: {
+          name:'',
+          avatar:''
+        },
+        teamB: {
+          name:'',
+          avatar:''
+        },
+        winRate: "",
+        loseRate: "",
+        rate: ""
+      },
 
-      currentLeague: null,
-      currentA: null,
-      currentB: null,
+      leagueData: {
+        default: 0,
+        leagues: []
+      },
+      teamData: {
+        default: 0,
+        teams: []
+      },
+      ruleData: {
+        default: 0,
+        rules: []
+      },
 
-      // anim: {},
+      current: {
+        league: 1,
+        teamA: 1,
+        teamB: 1,
+        rule: 1
+      },
+
+      anim: {},
       step: 0
     };
   },
@@ -149,55 +240,66 @@ export default {
       renderer: "svg",
       loop: true,
       autoplay: true,
-      path: "/star_success.json",
+      path: "/star_success.json"
     });
   },
   methods: {
     _predict() {
-
       setTimeout(() => {
         this.result = {
           teamA: {
             name: "aaa",
-            avatar:
-              "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
+            avatar: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4"
           },
           teamB: {
             name: "bbb",
-            avatar:
-              "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4",
+            avatar: "https://avatars2.githubusercontent.com/u/1523580?s=460&v=4"
           },
-          rate: '50'
+          winRate: 30,
+          loseRate: 60,
+          rate: 90
         };
         this.isLoading = false;
-      }, 5000);
+      }, 500);
     },
-    _changeCurrentTable(step){
+    _changeCurrentTable(step) {
       let index = tableStatesENUM.indexOf(this.currentTable);
-      this.currentTable = tableStatesENUM[index + step];
+      let table = tableStatesENUM[index + step];
+
+      this.currentTable = table;
+      console.log(this.current[table]);
+      this.$refs[table].setCurrentRow();
     },
     onLeagueSelect(val) {
-      this.currentLeague = val;
+      console.log(val);
+      this.current.league = val;
       this.step = 1;
     },
     onTeamASelect(val) {
-      this.currentA = val;
+      console.log(val);
+      this.current.teamA = val;
       this.step = 2;
     },
     onTeamBSelect(val) {
-      this.currentB = val;
+      console.log(val);
+      this.current.teamB = val;
       this.step = 3;
+    },
+    onRuleSelect(val) {
+      console.log(val);
+      this.current.rule = val;
+      this.step = 4;
     },
     onBackButtonClick() {
       this.step -= 1;
-      this._changeCurrentTable(-1)
+      this._changeCurrentTable(-1);
     },
     onNextButtonClick() {
-      this._changeCurrentTable(1)
+      this._changeCurrentTable(1);
     },
     onPredictButtonClick() {
-      this.step = 4;
-      this._changeCurrentTable(1)
+      this.step = 5;
+      this._changeCurrentTable(1);
       this._predict();
     }
   }
@@ -205,4 +307,8 @@ export default {
 </script>
 
 <style>
+.img {
+  width: 100px;
+  height: 100px;
+}
 </style>
