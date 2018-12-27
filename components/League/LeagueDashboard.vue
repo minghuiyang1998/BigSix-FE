@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div class="tools">
-      <el-button size="mini" type="primary" @click="dialogVisible=true">添加球队<i class="el-icon-upload el-icon--right"></i></el-button>
+      <el-button size="mini" type="primary" @click="dialogVisible=true">添加球队<i class="el-icon-plus el-icon--right"></i></el-button>
       <el-button size="mini" type="primary" @click="$refs.upload.open(league.id)">上传比赛数据<i class="el-icon-upload el-icon--right"></i></el-button>
     </div>
     <div class="section">
