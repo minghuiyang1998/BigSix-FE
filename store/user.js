@@ -4,22 +4,18 @@ export const state = () => ({
 })
 
 export const actions = {
-  async getUser({dispatch}){
+  async getUser({commit}){
     try {
-      let data = await $axios.$get(`/api/auth/user`);
-      dispatch('setUser', data)
+      const data = await this.$axios.$get(`/api/auth/user`);
+      commit('SET_USER', data)
     } catch(e) {
       console.log(e)
     }
-  },
-  setUser({ commit }, user) {
-    console.log('setUser!')
-    commit('setUserInfo', user)
   }
 }
 
 export const mutations = {
-  setUserInfo(state, props) {
+  SET_USER(state, props) {
     state.userInfo = Object.assign({}, state.userInfo, props)
     state.isLogin = true
   }

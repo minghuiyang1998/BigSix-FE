@@ -12,11 +12,11 @@
         style="width: 200px; height: 200px; top:-100px;"
       ></div>
       <el-form :model="user" class="mt-6">
-        <el-form-item prop="username" required="true">
+        <el-form-item prop="username" :required="true">
           <label class="form-label f5">用户名</label>
           <el-input type="username" v-model="user.username" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="password" required="true">
+        <el-form-item prop="password" :required="true">
           <label class="form-label f5">密码</label>
           <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
         </el-form-item>
@@ -35,7 +35,7 @@
 import lottie from "lottie-web";
 export default {
   async asyncData({ $axios }) {
-    
+
   },
   data() {
     return {
@@ -69,21 +69,11 @@ export default {
           );
 
           if (res.ok) {
-            this.$store.dispatch("user/setUser", res);
+            this.$store.commit("user/SET_USER", res);
             this.$router.push('/')
           } else {
             this.$message(res.message)
           }
-          // if (res.status < 400) {
-          //   if (res.data.code && res.data.code < 400) {
-          //     this.$store.dispatch("user/setUser", res);
-          //     redirect('/')
-          //   } else {
-          //     throw res.data;
-          //   }
-          // } else {
-          //   throw { message: res.statusText };
-          // }
         } catch (err) {
             this.$message(err.message);
         }
