@@ -82,10 +82,10 @@
 </template>
 
 <script>
-import echarts from "echarts";
+// import echarts from "echarts";
 import { MatchList } from '@/components/Match';
 
-require("../../assets/javascript/customed.js");
+// require("../../assets/javascript/customed.js");
 
 export default {
   components: {
@@ -101,12 +101,9 @@ export default {
   async asyncData({ params, $axios }) {
     let team;
     try {
-      console.log(params.id);
       let res = await $axios.$get(`/api/league/team/${params.id}`);
-      console.log(res);
       team = res;
     } catch (e) {
-      console.log(e);
     }
 
     let history;
@@ -126,6 +123,7 @@ export default {
     } catch (e) {
       console.log(e);
     }
+
     return {
       history: history,
       chartData: { xData, yData_lose, yData_win },
@@ -209,13 +207,9 @@ export default {
     }
   },
   methods: {
-    _getHistoryData(param) {
-      // const res = await this.$axios.$get("http://icanhazip.com");
-      // this.historyData = res.data.historyData;
-    },
-    onPaginationButtonClick(val) {
-      console.log(val);
-    }
+    // onPaginationButtonClick(val) {
+    //   console.log(val);
+    // }
   }
 };
 </script>
