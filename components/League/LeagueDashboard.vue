@@ -37,7 +37,7 @@
       <TeamForm v-if="dialogVisible" ref="teamForm" :leagueId="league.id" />
       <div slot="footer">
         <el-button @click="dialogVisible=false">关闭</el-button>
-        <el-button type="primary" v-loading="teamCreating" @click="handleCreateTeams" :disabled="!teamFormValid">创建球队</el-button>
+        <el-button type="primary" v-loading="teamCreating" @click="handleCreateTeams">创建球队</el-button>
       </div>
     </el-dialog>
   </el-card>
@@ -71,6 +71,7 @@ export default {
       activeNames: [],
       dialogVisible: false,
       opened: null,
+      teamForm: null,
     }
   },
 
@@ -96,6 +97,7 @@ export default {
     },
 
     open() {
+      console.log(this.$refs.teamForm)
       this.teamForm = this.$refs.teamForm;
     },
 
